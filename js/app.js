@@ -290,30 +290,32 @@ const App = {
   // KPI Metrics Summary Ribbon
   // --------------------------------------------------------------------------
   renderKPIs() {
-    const todayStr = getRelativeDateString(0);
-    const todayTasks = this.tasks.filter(t => t.dueDate === todayStr);
-    const completedToday = todayTasks.filter(t => t.completed).length;
-    const totalToday = todayTasks.length > 0 ? todayTasks.length : this.tasks.length;
-    const completedTotal = todayTasks.length > 0 ? completedToday : this.tasks.filter(t => t.completed).length;
-
-    const pct = totalToday > 0 ? Math.round((completedTotal / totalToday) * 100) : 0;
+    const totalTasks = this.tasks.length;
+    const completedTasks = this.tasks.filter(t => t.completed).length;
+    const pct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
     const kpiDone = document.getElementById('kpiTasksDone');
     const kpiTotal = document.getElementById('kpiTasksTotal');
     const kpiPct = document.getElementById('kpiTasksPct');
     const kpiFill = document.getElementById('kpiTasksFill');
 
-    if (kpiDone) kpiDone.textContent = completedTotal;
-    if (kpiTotal) kpiTotal.textContent = `/ ${totalToday} done`;
+    if (kpiDone) kpiDone.textContent = completedTasks;
+    if (kpiTotal) kpiTotal.textContent = `/ ${totalTasks} done`;
     if (kpiPct) kpiPct.textContent = `${pct}%`;
     if (kpiFill) kpiFill.style.width = `${pct}%`;
 
     // Habit KPI
-    const nurturedCount = this.habits.filter(h => (h.level >= 4 || h.nurtured)).length;
+    const totalHabits = this.habits.length;
+    const nurturedCount = this.habits.filter(h => h.nurtured).length;
+    const habitPct = totalHabits > 0 ? Math.round((nurturedCount / totalHabits) * 100) : 0;
+
     const kpiHabitsNurtured = document.getElementById('kpiHabitsNurtured');
     const kpiHabitsTotal = document.getElementById('kpiHabitsTotal');
+    const kpiHabitsStreak = document.getElementById('kpiHabitsStreak');
+
     if (kpiHabitsNurtured) kpiHabitsNurtured.textContent = nurturedCount;
-    if (kpiHabitsTotal) kpiHabitsTotal.textContent = `/ ${this.habits.length} nurtured`;
+    if (kpiHabitsTotal) kpiHabitsTotal.textContent = `/ ${totalHabits} nurtured`;
+    if (kpiHabitsStreak) kpiHabitsStreak.textContent = `${habitPct}% Active`;
 
     // Next Milestone KPI
     const kpiNextEventTitle = document.getElementById('kpiNextEventTitle');

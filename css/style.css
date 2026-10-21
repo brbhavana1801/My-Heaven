@@ -326,13 +326,13 @@ body {
 
 .top-bar-inner {
   width: 100%;
-  max-width: 1380px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 /* Left: Branding */
@@ -342,6 +342,8 @@ body {
   gap: 10px;
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .brand-crest-leaf {
@@ -356,6 +358,7 @@ body {
   font-size: 1.25rem;
   box-shadow: 0 2px 8px rgba(71, 94, 62, 0.15);
   transition: transform 0.25s ease;
+  flex-shrink: 0;
 }
 
 .top-brand-left:hover .brand-crest-leaf {
@@ -365,6 +368,8 @@ body {
 .brand-text-block {
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .brand-title {
@@ -376,6 +381,8 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .brand-heart-sparkle {
@@ -389,6 +396,8 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .status-pulse-dot {
@@ -409,7 +418,10 @@ body {
 .top-center-chronos {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .live-clock-pill {
@@ -582,6 +594,7 @@ body {
 /* Quick Master Add Dropdown */
 .quick-add-dropdown-container {
   position: relative;
+  flex-shrink: 0;
 }
 
 .btn-quick-add-master {
@@ -599,6 +612,8 @@ body {
   cursor: pointer;
   box-shadow: 0 3px 8px rgba(67, 89, 57, 0.2);
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-quick-add-master:hover {
@@ -674,6 +689,8 @@ body {
   font-weight: 800;
   color: var(--c-text-deep);
   transition: all 0.2s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .user-profile-crest-btn:hover {
@@ -683,6 +700,11 @@ body {
 
 .user-crest-avatar {
   font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.user-crest-name {
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -875,25 +897,20 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  overflow-x: auto;
+  flex-wrap: wrap;
   padding-bottom: 4px;
-  scrollbar-width: none;
-}
-
-.dash-tabs-scroll-container::-webkit-scrollbar {
-  display: none;
 }
 
 .dash-tab-btn {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1.5px solid rgba(225, 218, 205, 0.75);
   color: var(--c-text-muted);
   font-family: var(--font-main);
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 800;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: var(--radius-pill);
   cursor: pointer;
   display: inline-flex;
@@ -2318,18 +2335,24 @@ body {
 }
 
 /* ==========================================================================
-   Bottom Floating Nav Dock
+   Bottom Floating Nav Dock (Mobile Only)
    ========================================================================== */
 
 .floating-dock-bottom {
-  position: fixed;
-  bottom: 22px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  z-index: 50;
-  pointer-events: none;
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .floating-dock-bottom {
+    display: flex !important;
+    position: fixed;
+    bottom: 22px;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    z-index: 50;
+    pointer-events: none;
+  }
 }
 
 .dock-pill-container {
@@ -2416,3 +2439,23 @@ body {
   50% { transform: translate(var(--tx, 15px), -25px) scale(1.1); }
   100% { opacity: 0; transform: translate(var(--tx, 30px), 60px) scale(0.8); }
 }
+
+/* Responsive Top Bar Refinements */
+@media (max-width: 1260px) {
+  .cozy-quote-pill {
+    display: none !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .sound-vol-slider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .ambient-sound-pill {
+    display: none !important;
+  }
+}
+
