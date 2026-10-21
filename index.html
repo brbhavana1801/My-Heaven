@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>little haven ♡ · Cozy Studio Ghibli Forest Sanctuary Dashboard</title>
+  <meta name="description" content="An organized, cozy personal life sanctuary and productivity dashboard designed with a Studio Ghibli nature aesthetic. Clear typography, structured layout, and calming ambient sounds.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23475E3E'/><path d='M16 6 C10 12 10 20 16 26 C22 20 22 12 16 6 Z' fill='%23DCE3C8'/></svg>">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. Login Page Gateway Overlay (Two Options: Sign In & Create Account)
+       ======================================================================== -->
+  <div class="login-gateway-overlay" id="loginGatewayOverlay">
+    <div class="login-card">
+      <!-- Totoro Welcome Icon -->
+      <div class="login-totoro-icon">
+        <svg viewBox="0 0 80 84" width="56" height="58">
+          <ellipse cx="28" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(-10 28 18)" />
+          <ellipse cx="52" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(10 52 18)" />
+          <ellipse cx="40" cy="52" rx="30" ry="28" fill="#75876E" />
+          <ellipse cx="40" cy="57" rx="22" ry="20" fill="#F4EFE2" />
+          <path d="M34 46 L37 43 L40 46 M46 46 L49 43 L52 46 M40 54 L43 51 L46 54" stroke="#75876E" stroke-width="2" stroke-linecap="round" fill="none" />
+          <circle cx="30" cy="38" r="5" fill="#FFFFFF" />
+          <circle cx="50" cy="38" r="5" fill="#FFFFFF" />
+          <circle cx="31" cy="38" r="2.2" fill="#1C1F1A" />
+          <circle cx="49" cy="38" r="2.2" fill="#1C1F1A" />
+          <ellipse cx="40" cy="40" rx="2" ry="1" fill="#1C1F1A" />
+        </svg>
+      </div>
+
+      <h2 class="login-title">little haven ♡</h2>
+      <p class="login-subtitle">Enter your organized personal sanctuary</p>
+
+      <!-- Two-Option Switch: Sign In & Create Your Account -->
+      <div class="login-tabs-bar">
+        <button type="button" class="login-tab-pill active" id="authTabBtnSignin" onclick="App.switchAuthTab('signin')">
+          Sign In
+        </button>
+        <button type="button" class="login-tab-pill" id="authTabBtnRegister" onclick="App.switchAuthTab('register')">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Auth Error Alert -->
+      <div class="auth-error-msg" id="authErrorMessage"></div>
+
+      <!-- Option 1: Sign In Form -->
+      <form id="authFormSignin" onsubmit="App.handleSignIn(event);">
+        <div class="login-form-group">
+          <label class="login-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="login-input" placeholder="e.g. wanderer@forest.me" required />
+        </div>
+
+        <div class="login-form-group">
+          <label class="login-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="login-input" placeholder="••••••••" required />
+        </div>
+
+        <button type="submit" class="login-btn-submit">
+          Sign In 🌿
+        </button>
+
+        <p style="margin-top:12px; font-size:0.8rem; color:var(--c-text-muted);">
+          Don't have an account? 
+          <a href="javascript:void(0)" onclick="App.switchAuthTab('register')" style="color:var(--c-bar-green); font-weight:800; text-decoration:none;">Create your account ✨</a>
+        </p>
+      </form>
+
+      <!-- Option 2: Create Your Account Form -->
+      <form id="authFormRegister" style="display:none;" onsubmit="App.handleRegister(event);">
+        <div class="login-form-group">
+          <label class="login-label" for="regName">Your Name / Nickname</label>
+          <input type="text" id="regName" class="login-input" placeholder="e.g. Forest Wanderer" required />
+        </div>
+
+        <div class="login-form-group">
+          <label class="login-label" for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" class="login-input" placeholder="e.g. wanderer@forest.me" required />
+        </div>
+
+        <div class="login-form-group">
+          <label class="login-label" for="regPassword">Create Password</label>
+          <input type="password" id="regPassword" class="login-input" placeholder="At least 6 characters" minlength="4" required />
+        </div>
+
+        <div class="login-form-group">
+          <label class="login-label" for="regConfirmPassword">Confirm Password</label>
+          <input type="password" id="regConfirmPassword" class="login-input" placeholder="Repeat password" minlength="4" required />
+        </div>
+
+        <button type="submit" class="login-btn-submit" style="background:#557248;">
+          Create Your Account 🌸
+        </button>
+
+        <p style="margin-top:12px; font-size:0.8rem; color:var(--c-text-muted);">
+          Already have an account? 
+          <a href="javascript:void(0)" onclick="App.switchAuthTab('signin')" style="color:var(--c-bar-green); font-weight:800; text-decoration:none;">Sign In 🌿</a>
+        </p>
+      </form>
+
+      <div style="margin-top: 14px; border-top: 1px dashed #E2D9C8; padding-top: 12px;">
+        <button type="button" class="login-guest-btn" onclick="App.quickGuestLogin()">
+          ✨ Quick Guest Entry (Instant)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Floating Leaves Canvas -->
+  <canvas id="ambientLeavesCanvas" class="ambient-particles-canvas"></canvas>
+
+  <!-- Left Ivy Leaves & Vine Frame (With Corner Soot Sprites & Acorns) -->
+  <div class="side-ivy-container side-ivy-left" aria-hidden="true">
+    <svg viewBox="0 0 140 700" width="140" height="700" fill="none">
+      <path d="M20 0 Q 35 150 15 320 T 25 580" stroke="#465B3E" stroke-width="3" stroke-linecap="round" />
+      <path d="M25 60 Q 65 90 70 140" stroke="#5B7347" stroke-width="2" />
+      <path d="M20 200 Q 60 220 55 280" stroke="#5B7347" stroke-width="2" />
+      <path d="M22 380 Q 70 410 60 480" stroke="#5B7347" stroke-width="2" />
+      <path d="M15 40 C -5 60 0 90 25 80 C 45 70 35 45 15 40 Z" fill="#5A7347" />
+      <path d="M68 135 C 50 120 60 90 85 105 C 105 120 90 150 68 135 Z" fill="#6B8554" />
+      <path d="M22 190 C 0 170 5 140 30 155 C 50 170 40 200 22 190 Z" fill="#526A40" />
+      <path d="M55 275 C 35 260 45 230 70 245 C 90 260 75 290 55 275 Z" fill="#6B8554" />
+      <path d="M18 490 C -2 470 5 440 28 455 C 48 470 38 500 18 490 Z" fill="#5A7347" />
+      <path d="M48 560 C 30 545 40 515 65 530 C 85 545 70 575 48 560 Z" fill="#6B8554" />
+      
+      <!-- Top Left Acorns -->
+      <g transform="translate(18, 95)">
+        <ellipse cx="6" cy="4" rx="7" ry="4" fill="#624220" />
+        <ellipse cx="6" cy="11" rx="6" ry="7" fill="#C28B4E" />
+      </g>
+      <g transform="translate(28, 102)">
+        <ellipse cx="6" cy="4" rx="6" ry="3.5" fill="#624220" />
+        <ellipse cx="6" cy="10" rx="5" ry="6.5" fill="#D49A58" />
+      </g>
+
+      <!-- Top Left Soot Sprite -->
+      <g class="soot-sprite-buddy" transform="translate(58, 38)" style="cursor:pointer;" title="Click soot sprite!">
+        <circle cx="16" cy="16" r="14" fill="#1C1F1A" />
+        <circle cx="11" cy="13" r="5" fill="#FFFFFF" />
+        <circle cx="21" cy="13" r="5" fill="#FFFFFF" />
+        <circle cx="12" cy="13" r="2" fill="#151713" />
+        <circle cx="22" cy="13" r="2" fill="#151713" />
+      </g>
+
+      <!-- Bottom Left Soot Sprite -->
+      <g class="soot-sprite-buddy" transform="translate(36, 510)" style="cursor:pointer;" title="Click soot sprite!">
+        <circle cx="16" cy="16" r="14" fill="#1C1F1A" />
+        <circle cx="11" cy="13" r="5" fill="#FFFFFF" />
+        <circle cx="21" cy="13" r="5" fill="#FFFFFF" />
+        <circle cx="12" cy="13" r="2" fill="#151713" />
+        <circle cx="22" cy="13" r="2" fill="#151713" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- Right Ivy Leaves & Vine Frame -->
+  <div class="side-ivy-container side-ivy-right" aria-hidden="true">
+    <svg viewBox="0 0 140 700" width="140" height="700" fill="none">
+      <path d="M120 0 Q 105 160 125 340 T 115 620" stroke="#465B3E" stroke-width="3" stroke-linecap="round" />
+      <path d="M120 70 Q 75 100 70 150" stroke="#5B7347" stroke-width="2" />
+      <path d="M125 45 C 145 65 140 95 115 85 C 95 75 105 50 125 45 Z" fill="#5A7347" />
+      <path d="M72 145 C 90 130 80 100 55 115 C 35 130 50 160 72 145 Z" fill="#6B8554" />
+      <path d="M110 320 C 130 340 125 370 100 360 C 80 350 90 325 110 320 Z" fill="#5A7347" />
+      <path d="M75 480 C 95 465 85 435 60 450 C 40 465 55 495 75 480 Z" fill="#6B8554" />
+      
+      <!-- Top Right Soot Sprite -->
+      <g class="soot-sprite-buddy" transform="translate(62, 85)" style="cursor:pointer;" title="Click soot sprite!">
+        <circle cx="16" cy="16" r="14" fill="#1C1F1A" />
+        <circle cx="11" cy="14" r="5" fill="#FFFFFF" />
+        <circle cx="21" cy="14" r="5" fill="#FFFFFF" />
+        <circle cx="11" cy="14" r="2" fill="#151713" />
+        <circle cx="21" cy="14" r="2" fill="#151713" />
+      </g>
+
+      <!-- Bottom Right Mushroom -->
+      <g transform="translate(38, 545)">
+        <path d="M18 20 C 8 20 6 10 18 8 C 30 10 28 20 18 20 Z" fill="#C94A3D" />
+        <circle cx="14" cy="13" r="1.5" fill="#FFF5EA" />
+        <circle cx="22" cy="12" r="1.2" fill="#FFF5EA" />
+        <path d="M16 20 L16 30 L20 30 L20 20 Z" fill="#F4EEDC" />
+      </g>
+
+      <!-- Bottom Right Soot Sprite with Konpeito Candy -->
+      <g class="soot-sprite-buddy" transform="translate(60, 520)" style="cursor:pointer;" title="Click soot sprite!">
+        <circle cx="16" cy="16" r="14" fill="#1C1F1A" />
+        <circle cx="11" cy="14" r="5" fill="#FFFFFF" />
+        <circle cx="21" cy="14" r="5" fill="#FFFFFF" />
+        <circle cx="11" cy="14" r="2" fill="#151713" />
+        <circle cx="21" cy="14" r="2" fill="#151713" />
+        <!-- Little Star Candy -->
+        <polygon points="4,22 6,26 10,26 7,29 8,33 4,30 0,33 1,29 -2,26 2,26" fill="#F7D486" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- ========================================================================
+       Executive Dashboard Top Bar (Branding, Live Clock, Soundscape, Profile)
+       ======================================================================== -->
+  <header class="top-bar-full">
+    <div class="top-bar-inner">
+      <!-- Left: Logo & Sanctuary Status -->
+      <div class="top-brand-left" onclick="App.switchDashboardView('overview')" title="little haven sanctuary · Return to Overview">
+        <div class="brand-crest-leaf">🌿</div>
+        <div class="brand-text-block">
+          <div class="brand-title">little haven <span class="brand-heart-sparkle">♡</span></div>
+          <div class="brand-status-tag"><span class="status-pulse-dot"></span> Desk Sanctuary Active</div>
+        </div>
+      </div>
+
+      <!-- Center: Live Real-Time Clock & Rotating Quote -->
+      <div class="top-center-chronos">
+        <div class="live-clock-pill">
+          <span class="live-clock-time" id="liveClockTime">12:00 PM</span>
+          <span class="live-clock-sep">•</span>
+          <span class="live-clock-date" id="liveClockDate">Thursday, Oct 16</span>
+        </div>
+        <div class="cozy-quote-pill" title="Click for new inspiration" onclick="App.shuffleQuote()">
+          <span class="quote-leaf">✨</span>
+          <span class="quote-text" id="dailyQuoteText">Take today one thing at a time ✨</span>
+          <button class="quote-refresh-btn" type="button" title="Shuffle quote">↻</button>
+        </div>
+      </div>
+
+      <!-- Right: Ambient Audio Controller, Quick Add, User Profile -->
+      <div class="top-actions-right">
+        <!-- Ambient Forest Soundscape Mini Player -->
+        <div class="ambient-sound-pill" id="ambientSoundPill" title="Forest Soundscape Sanctuary">
+          <button type="button" class="sound-play-toggle-btn" id="soundPlayToggleBtn" onclick="App.toggleAmbientSound()" title="Toggle ambient sounds">
+            <span id="soundPlayIcon">▶</span>
+          </button>
+          <div class="sound-track-info">
+            <div class="sound-wave-bars" id="soundWaveBars">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <select class="sound-track-select" id="soundTrackSelect" onchange="App.changeAmbientTrack(this.value)">
+              <option value="rain">🌧️ Rain</option>
+              <option value="breeze">🍃 Breeze</option>
+              <option value="birds">🐦 Birds</option>
+            </select>
+          </div>
+          <input type="range" class="sound-vol-slider" id="soundVolSlider" min="0" max="1" step="0.05" value="0.45" oninput="App.changeAmbientVolume(this.value)" title="Volume Slider" />
+        </div>
+
+        <!-- Quick "+ New" Master Add Action -->
+        <div class="quick-add-dropdown-container">
+          <button type="button" class="btn-quick-add-master" onclick="App.toggleQuickAddMenu()" title="Quick Add New Item">
+            <span class="plus-symbol">+</span> <span>New</span>
+          </button>
+          <div class="quick-add-menu-popover" id="quickAddMenuPopover">
+            <button type="button" onclick="App.openQuickAddTask()"><span class="menu-icon">✓</span> Add Task</button>
+            <button type="button" onclick="App.openQuickAddEvent()"><span class="menu-icon">📅</span> Add Date/Event</button>
+            <button type="button" onclick="App.openQuickAddNote()"><span class="menu-icon">📝</span> Add Sticky Note</button>
+            <button type="button" onclick="App.openAddMemoryModal()"><span class="menu-icon">📷</span> Save Memory Photo</button>
+          </div>
+        </div>
+
+        <!-- User Profile Pill -->
+        <button type="button" class="user-profile-crest-btn" onclick="App.openAccountModal()" title="View Account & Stats">
+          <span class="user-crest-avatar">🍃</span>
+          <span class="user-crest-name" id="topBarUserName">Wanderer</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       Dashboard Container & Organized Architecture
+       ======================================================================== -->
+  <div class="dashboard-wrapper">
+
+    <!-- KPI Metrics Summary Ribbon (4 Organized At-A-Glance Metric Tiles) -->
+    <section class="dashboard-kpi-strip" aria-label="Sanctuary Metrics Overview">
+      <!-- Metric 1: Tasks Today Progress -->
+      <div class="kpi-card kpi-card-tasks" onclick="App.switchDashboardView('tasks')" title="Click to view full Task Board">
+        <div class="kpi-icon-badge">📋</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Today's Tasks</div>
+          <div class="kpi-value-row">
+            <span class="kpi-main-num" id="kpiTasksDone">0</span>
+            <span class="kpi-sub-num" id="kpiTasksTotal">/ 0 done</span>
+            <span class="kpi-badge-pct" id="kpiTasksPct">0%</span>
+          </div>
+          <div class="kpi-progress-track">
+            <div class="kpi-progress-fill" id="kpiTasksFill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric 2: Habit Garden Streaks -->
+      <div class="kpi-card kpi-card-habits" onclick="App.switchDashboardView('habits')" title="Click to view Habit Garden">
+        <div class="kpi-icon-badge">🌱</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Habit Garden</div>
+          <div class="kpi-value-row">
+            <span class="kpi-main-num" id="kpiHabitsNurtured">0</span>
+            <span class="kpi-sub-num" id="kpiHabitsTotal">/ 3 nurtured</span>
+            <span class="kpi-badge-pct" id="kpiHabitsStreak">Streaks Active</span>
+          </div>
+          <div class="kpi-leaf-row" id="kpiHabitLeaves">
+            <span class="kpi-mini-leaf">🍃</span>
+            <span class="kpi-mini-leaf">🍃</span>
+            <span class="kpi-mini-leaf">🍃</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric 3: Next Upcoming Milestone -->
+      <div class="kpi-card kpi-card-agenda" onclick="App.switchDashboardView('calendar')" title="Click to view Calendar & Events">
+        <div class="kpi-icon-badge">📅</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Next Deadline</div>
+          <div class="kpi-deadline-title" id="kpiNextEventTitle">Submissions 📋</div>
+          <div class="kpi-deadline-time" id="kpiNextEventDays">In 3 days</div>
+        </div>
+      </div>
+
+      <!-- Metric 4: Focus Pomodoro Sanctuary Preview -->
+      <div class="kpi-card kpi-card-focus" onclick="App.switchDashboardView('focus')" title="Click to enter Focus Sanctuary">
+        <div class="kpi-icon-badge">⏱️</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Focus Sanctuary</div>
+          <div class="kpi-value-row">
+            <span class="kpi-main-num" id="kpiFocusTime">25:00</span>
+            <span class="kpi-focus-status" id="kpiFocusStatus">Ready</span>
+          </div>
+          <div class="kpi-focus-actions">
+            <button type="button" class="kpi-btn-focus-quick" id="kpiQuickFocusBtn" onclick="event.stopPropagation(); App.togglePomodoro();">
+              ▶ Start Focus
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Organized Dashboard Navigation & View Bar -->
+    <nav class="dashboard-tabs-nav" aria-label="Dashboard Workspace Views">
+      <div class="dash-tabs-scroll-container">
+        <button type="button" class="dash-tab-btn active" data-view="overview" onclick="App.switchDashboardView('overview')">
+          <span class="tab-icon">🌿</span>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="tasks" onclick="App.switchDashboardView('tasks')">
+          <span class="tab-icon">✓</span>
+          <span>Task Board</span>
+          <span class="tab-counter-badge" id="tabBadgeTasks">0</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="calendar" onclick="App.switchDashboardView('calendar')">
+          <span class="tab-icon">📅</span>
+          <span>Calendar & Agenda</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="habits" onclick="App.switchDashboardView('habits')">
+          <span class="tab-icon">🌱</span>
+          <span>Habits Garden</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="notes" onclick="App.switchDashboardView('notes')">
+          <span class="tab-icon">📝</span>
+          <span>Notes & Scratchpad</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="memories" onclick="App.switchDashboardView('memories')">
+          <span class="tab-icon">📷</span>
+          <span>Memories Scrapbook</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="focus" onclick="App.switchDashboardView('focus')">
+          <span class="tab-icon">⏱️</span>
+          <span>Focus Pomodoro</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ======================================================================
+         VIEW 1: OVERVIEW DASHBOARD (Master 2-Column Structured Sanctuary Desk)
+         ====================================================================== -->
+    <main class="dashboard-view-panel active" id="viewOverview">
+      <div class="organized-dashboard-grid">
+
+        <!-- Left Column: Primary Productivity Hub (62% width) -->
+        <div class="dash-col-primary">
+
+          <!-- 1. Daily Tasks Hub -->
+          <div class="haven-card task-card-hub" id="cardTasksOverview">
+            <!-- Totoro Buddy Sitting on Top Left of Task Card -->
+            <div class="totoro-buddy" id="totoroBuddy" title="Totoro says: One gentle step at a time! 🌿">
+              <svg viewBox="0 0 80 84" width="42" height="44">
+                <ellipse cx="28" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(-10 28 18)" />
+                <ellipse cx="52" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(10 52 18)" />
+                <ellipse cx="40" cy="52" rx="30" ry="28" fill="#75876E" />
+                <ellipse cx="40" cy="57" rx="22" ry="20" fill="#F4EFE2" />
+                <path d="M34 46 L37 43 L40 46 M46 46 L49 43 L52 46 M40 54 L43 51 L46 54" stroke="#75876E" stroke-width="2" stroke-linecap="round" fill="none" />
+                <circle cx="30" cy="38" r="5" fill="#FFFFFF" />
+                <circle cx="50" cy="38" r="5" fill="#FFFFFF" />
+                <circle cx="31" cy="38" r="2.2" fill="#1C1F1A" />
+                <circle cx="49" cy="38" r="2.2" fill="#1C1F1A" />
+                <ellipse cx="40" cy="40" rx="2" ry="1" fill="#1C1F1A" />
+              </svg>
+            </div>
+
+            <div class="acorns-decor-top">
+              <svg viewBox="0 0 40 40" width="32" height="32">
+                <g transform="rotate(15 20 20)">
+                  <ellipse cx="14" cy="12" rx="7" ry="4" fill="#583818" />
+                  <ellipse cx="14" cy="18" rx="6" ry="8" fill="#C88E4B" />
+                  <ellipse cx="26" cy="14" rx="6.5" ry="3.8" fill="#583818" />
+                  <ellipse cx="26" cy="20" rx="5.5" ry="7.5" fill="#D49A58" />
+                </g>
+              </svg>
+            </div>
+
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span class="card-leaf-icon">🌿</span>
+                <h2 class="card-title">Daily Tasks & Checklist</h2>
+              </div>
+              <!-- Filter chips for fast task scoping -->
+              <div class="task-filter-pills-row">
+                <button type="button" class="task-pill-filter active" data-filter="all" onclick="App.setTaskFilter('all')">All</button>
+                <button type="button" class="task-pill-filter" data-filter="today" onclick="App.setTaskFilter('today')">Today</button>
+                <button type="button" class="task-pill-filter" data-filter="upcoming" onclick="App.setTaskFilter('upcoming')">Upcoming</button>
+                <button type="button" class="task-pill-filter" data-filter="done" onclick="App.setTaskFilter('done')">Completed</button>
+              </div>
+            </div>
+
+            <!-- Dynamic Inline Add Task Input -->
+            <form class="task-add-bar-top" onsubmit="event.preventDefault(); App.addInlineTask();">
+              <input type="text" id="taskInlineInput" class="task-add-input-main" placeholder="Add a new gentle task..." required />
+              <select id="taskInlineCategory" class="task-add-category-select" title="Choose category">
+                <option value="General">General</option>
+                <option value="GATE Prep">GATE Prep</option>
+                <option value="NPTEL">NPTEL</option>
+                <option value="Coding">Coding</option>
+                <option value="Study">Study</option>
+                <option value="Wellness">Wellness</option>
+              </select>
+              <input type="date" id="taskInlineDate" class="task-add-date-input" title="Scheduled date" />
+              <button type="submit" class="btn-task-add-submit" title="Add & save task">+</button>
+            </form>
+
+            <!-- Tasks List Container -->
+            <div class="task-pills-list" id="tasksListContainer">
+              <!-- Rendered dynamically by App.renderTasks() -->
+            </div>
+          </div>
+
+          <!-- 2. Goals & Habits Garden -->
+          <div class="haven-card habit-card-hub" id="cardHabitsOverview">
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span class="card-sprout-icon">🌱</span>
+                <h2 class="card-title">Goals & Habit Garden</h2>
+              </div>
+              <button type="button" class="card-action-mini-btn" onclick="App.toggleAddHabitForm()">+ Add Habit</button>
+            </div>
+
+            <!-- Inline Add Habit Form (Collapsible) -->
+            <form id="inlineAddHabitForm" style="display:none; margin-bottom:12px; gap:8px;" onsubmit="event.preventDefault(); App.saveInlineHabit();">
+              <input type="text" id="newHabitNameInput" placeholder="Habit name (e.g. Morning Tea & Reading 🍵)..." class="task-add-input-main" style="padding:8px 12px; background:#FFF; border:1px solid #C4D6BD; border-radius:10px;" required />
+              <button type="submit" class="btn-task-add-submit" style="width:auto; padding:0 14px; border-radius:10px; font-size:0.85rem;">Save</button>
+            </form>
+
+            <!-- Habits Branch Items -->
+            <div class="habits-branch-items" id="habitsListContainer">
+              <!-- Rendered dynamically by App.renderHabits() -->
+            </div>
+
+            <p class="habit-footer-tip">
+              Tap any habit to nurture leaf progress 🌿 · Cultivate gentle consistency
+            </p>
+          </div>
+
+          <!-- 3. Little Notes & Thoughts Scratchpad -->
+          <div class="haven-card notes-card-hub" id="cardNotesOverview">
+            <div class="sticky-note-card">
+              <div class="sticky-push-pin-red"></div>
+              
+              <!-- Soot Sprite Perch -->
+              <div class="soot-sprite-note-perch" title="A soot sprite watching over your doodles!">
+                <svg viewBox="0 0 100 100" width="32" height="32">
+                  <circle cx="50" cy="50" r="38" fill="#1C1F1A" />
+                  <circle cx="38" cy="46" r="11" fill="#FFFFFF" />
+                  <circle cx="62" cy="46" r="11" fill="#FFFFFF" />
+                  <circle cx="40" cy="46" r="4.5" fill="#151713" />
+                  <circle cx="64" cy="46" r="4.5" fill="#151713" />
+                </svg>
+              </div>
+
+              <div>
+                <div class="card-title-row" style="margin-bottom:8px;">
+                  <div class="card-title-left">
+                    <span>📝</span>
+                    <h2 class="card-title" style="font-size:1.15rem;">Little Notes & Thoughts</h2>
+                  </div>
+                </div>
+
+                <!-- Prompt-Free Inline Add Thought Input -->
+                <form class="thought-add-bar-inline" onsubmit="event.preventDefault(); App.addInlineThought();">
+                  <input type="text" id="thoughtInlineInput" class="thought-add-input-main" placeholder="Type a thought or scribble..." required />
+                  <button type="submit" class="btn-thought-pin">Pin 📌</button>
+                </form>
+
+                <div class="note-body-text" id="stickyNoteContent">
+                  ideas & random<br>thoughts
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+                <button type="button" class="mini-creation-sketch" onclick="App.convertNoteToTask()" title="Click to convert note into a task!">
+                  → ✓ Add as Task
+                </button>
+
+                <svg viewBox="0 0 80 50" width="65" height="38" fill="none" stroke="#2B3624" stroke-width="1.8" stroke-linecap="round">
+                  <path d="M10 25 C 20 10 30 10 30 28 C 30 42 15 42 22 24 C 28 10 45 10 50 26 C 54 38 42 42 48 24 C 54 8 72 15 70 34" />
+                  <path d="M64 30 L 70 34 L 72 26" stroke-width="1.8" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Timeline, Calendar & Serenity Widgets (38% width) -->
+        <div class="dash-col-secondary">
+
+          <!-- 4. Upcoming Deadlines & Milestones -->
+          <div class="haven-card dates-card-hub" id="cardDatesOverview">
+            <div class="dates-decor-mushrooms">
+              <svg viewBox="0 0 50 50" width="36" height="36">
+                <path d="M22 28 C 12 28 10 16 22 14 C 34 16 32 28 22 28 Z" fill="#C94A3D" />
+                <circle cx="18" cy="20" r="1.8" fill="#FFF5EA" />
+                <circle cx="25" cy="18" r="1.5" fill="#FFF5EA" />
+                <path d="M20 28 L20 40 L24 40 L24 28 Z" fill="#F4EEDC" />
+                <path d="M34 32 C 26 32 26 22 34 20 C 42 22 42 32 34 32 Z" fill="#D98A52" />
+                <path d="M33 32 L33 42 L36 42 L36 32 Z" fill="#F4EEDC" />
+              </svg>
+            </div>
+
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span class="card-calendar-icon">📅</span>
+                <h2 class="card-title">Upcoming Dates</h2>
+              </div>
+            </div>
+
+            <!-- Inline Add Date Bar -->
+            <form class="date-add-bar-inline" onsubmit="event.preventDefault(); App.addInlineUpcomingDate();">
+              <input type="text" id="dateInlineTitle" class="date-add-input-main" placeholder="Event / submission..." required />
+              <input type="date" id="dateInlineDate" class="date-add-date-picker" required />
+              <button type="submit" class="btn-date-add-submit" title="Add date">+</button>
+            </form>
+
+            <!-- Timeline Agenda Container -->
+            <div class="dates-timeline" id="milestonesListContainer">
+              <!-- Rendered dynamically by App.renderMilestones() -->
+            </div>
+          </div>
+
+          <!-- 5. Calendar Sanctuary Desk -->
+          <div class="haven-card calendar-desk-hub" id="cardCalendarOverview">
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span>📆</span>
+                <h2 class="card-title">Calendar Desk</h2>
+              </div>
+            </div>
+
+            <!-- Month & Year Navigation -->
+            <div class="calendar-card-mini-nav">
+              <button type="button" class="cal-mini-arrow-btn" onclick="App.calPrevMonth()" title="Previous month">‹</button>
+              <span class="cal-mini-heading" id="calMiniMonthHeading">OCTOBER 2026</span>
+              <button type="button" class="cal-mini-arrow-btn" onclick="App.calNextMonth()" title="Next month">›</button>
+            </div>
+
+            <!-- Mini Calendar Days Header -->
+            <div class="calendar-mini-grid" style="margin-bottom:4px;">
+              <div class="cal-mini-header-day">S</div>
+              <div class="cal-mini-header-day">M</div>
+              <div class="cal-mini-header-day">T</div>
+              <div class="cal-mini-header-day">W</div>
+              <div class="cal-mini-header-day">T</div>
+              <div class="cal-mini-header-day">F</div>
+              <div class="cal-mini-header-day">S</div>
+            </div>
+
+            <!-- Days Grid with Activity Doodlers -->
+            <div class="calendar-mini-grid" id="calMiniGridDays">
+              <!-- Rendered dynamically by App.renderCalendar() -->
+            </div>
+
+            <p style="font-size:0.75rem; color:var(--c-text-faint); text-align:center; margin-top:8px;">
+              🌿 Task · 📅 Date · 📷 Memory · 📌 Note
+            </p>
+          </div>
+
+          <!-- 6. Memories Polaroid Showcase -->
+          <div class="haven-card memories-card-amber" id="cardMemoriesOverview">
+            <span class="memories-sparkle-decor top-right">✨</span>
+            <span class="memories-sparkle-decor bottom-left">✨</span>
+
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span>🧸</span>
+                <h2 class="card-title" style="color:#1C2419;">Memories</h2>
+              </div>
+              <button type="button" class="card-action-mini-btn" style="background:#FFF; color:#5B3E1F; border-color:#D8A65E;" onclick="App.openAddMemoryModal()">📷 + Add</button>
+            </div>
+
+            <!-- Polaroid Photo Frame -->
+            <div class="polaroid-frame-container" id="polaroidCardActive" title="Click to view full memory & personal note!">
+              <!-- Rendered dynamically by App.renderMemories() -->
+            </div>
+
+            <!-- Memory Navigation Controls -->
+            <div class="memory-actions-row">
+              <button type="button" class="mem-nav-arrow" onclick="App.prevMemory()" title="Previous memory">‹</button>
+              <span style="font-size:0.75rem; color:#362612; font-weight:700;">Tap photo to read note</span>
+              <button type="button" class="mem-nav-arrow" onclick="App.nextMemory()" title="Next memory">›</button>
+            </div>
+          </div>
+
+          <!-- 7. Focus Pomodoro Mini Desk Widget -->
+          <div class="haven-card pomodoro-mini-hub">
+            <div class="card-title-row">
+              <div class="card-title-left">
+                <span>⏱️</span>
+                <h2 class="card-title">Focus Sanctuary</h2>
+              </div>
+              <span class="focus-mode-badge" id="focusModeBadge">Focus · 25m</span>
+            </div>
+
+            <div class="pomodoro-mini-display">
+              <div class="pomodoro-mini-time" id="pomodoroMiniTime">25:00</div>
+              <div class="pomodoro-mini-controls">
+                <button type="button" class="btn-pomo-ctrl main" id="pomoMiniStartBtn" onclick="App.togglePomodoro()">Start</button>
+                <button type="button" class="btn-pomo-ctrl reset" onclick="App.resetPomodoro()">Reset</button>
+              </div>
+            </div>
+
+            <div class="pomodoro-modes-row">
+              <button type="button" class="pomo-mode-chip active" onclick="App.setPomodoroMode('focus')">25m Focus</button>
+              <button type="button" class="pomo-mode-chip" onclick="App.setPomodoroMode('short')">5m Rest</button>
+              <button type="button" class="pomo-mode-chip" onclick="App.setPomodoroMode('long')">15m Break</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- ======================================================================
+         VIEW 2: DEDICATED TASK BOARD WORKSPACE
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewTasks">
+      <div class="dedicated-view-container">
+        <div class="view-header-row">
+          <div>
+            <h2 class="view-title">✓ Task Board & Productivity</h2>
+            <p class="view-subtitle">Organized by deadlines, categories, and peaceful completion.</p>
+          </div>
+          <button type="button" class="btn-primary-action" onclick="document.getElementById('dedicatedTaskInput').focus()">
+            + New Task
+          </button>
+        </div>
+
+        <!-- Task Filter & Search Toolbar -->
+        <div class="dedicated-task-toolbar">
+          <div class="task-search-box">
+            <span>🔍</span>
+            <input type="text" id="taskSearchInput" placeholder="Search tasks by keyword..." oninput="App.renderDedicatedTasks()" />
+          </div>
+
+          <!-- Status Filters -->
+          <div class="task-filter-pills-row">
+            <button type="button" class="task-pill-filter active" data-filter="all" onclick="App.setTaskFilter('all')">All</button>
+            <button type="button" class="task-pill-filter" data-filter="today" onclick="App.setTaskFilter('today')">Today</button>
+            <button type="button" class="task-pill-filter" data-filter="upcoming" onclick="App.setTaskFilter('upcoming')">Upcoming</button>
+            <button type="button" class="task-pill-filter" data-filter="done" onclick="App.setTaskFilter('done')">Completed</button>
+          </div>
+
+          <!-- Category Filter Dropdown -->
+          <select id="taskCategoryFilter" class="task-add-category-select" onchange="App.renderDedicatedTasks()">
+            <option value="all">All Categories</option>
+            <option value="General">General</option>
+            <option value="GATE Prep">GATE Prep</option>
+            <option value="NPTEL">NPTEL</option>
+            <option value="Prep">Prep</option>
+            <option value="Coding">Coding</option>
+            <option value="Study">Study</option>
+            <option value="Wellness">Wellness</option>
+          </select>
+        </div>
+
+        <!-- Add Task Full Bar -->
+        <form class="dedicated-task-add-form" onsubmit="event.preventDefault(); App.addDedicatedTask();">
+          <input type="text" id="dedicatedTaskInput" placeholder="Add task title..." class="task-add-input-main" required />
+          <select id="dedicatedTaskCategory" class="task-add-category-select">
+            <option value="General">General</option>
+            <option value="GATE Prep">GATE Prep</option>
+            <option value="NPTEL">NPTEL</option>
+            <option value="Prep">Prep</option>
+            <option value="Coding">Coding</option>
+            <option value="Study">Study</option>
+            <option value="Wellness">Wellness</option>
+          </select>
+          <input type="date" id="dedicatedTaskDate" class="task-add-date-input" />
+          <button type="submit" class="btn-primary-action">+ Add Task</button>
+        </form>
+
+        <!-- Dedicated Tasks List -->
+        <div class="dedicated-tasks-grid" id="dedicatedTasksContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: DEDICATED CALENDAR & TIMELINE
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewCalendar">
+      <div class="dedicated-view-container">
+        <div class="view-header-row">
+          <div>
+            <h2 class="view-title">📅 Calendar Sanctuary & Schedule</h2>
+            <p class="view-subtitle">Review deadlines, past memories, and planned tasks across the month.</p>
+          </div>
+          <button type="button" class="btn-primary-action" onclick="App.openQuickAddEvent()">
+            + Add Event
+          </button>
+        </div>
+
+        <div class="dedicated-calendar-split">
+          <!-- Big Interactive Calendar -->
+          <div class="haven-card" style="min-height:480px;">
+            <div class="calendar-card-mini-nav" style="margin-bottom:18px;">
+              <button type="button" class="cal-mini-arrow-btn" onclick="App.calPrevMonth()">‹</button>
+              <span class="cal-mini-heading" style="font-size:1.2rem;" id="dedicatedCalMonthHeading">OCTOBER 2026</span>
+              <button type="button" class="cal-mini-arrow-btn" onclick="App.calNextMonth()">›</button>
+            </div>
+
+            <div class="calendar-mini-grid" style="margin-bottom:8px;">
+              <div class="cal-mini-header-day">SUN</div>
+              <div class="cal-mini-header-day">MON</div>
+              <div class="cal-mini-header-day">TUE</div>
+              <div class="cal-mini-header-day">WED</div>
+              <div class="cal-mini-header-day">THU</div>
+              <div class="cal-mini-header-day">FRI</div>
+              <div class="cal-mini-header-day">SAT</div>
+            </div>
+
+            <div class="calendar-mini-grid" id="dedicatedCalGridDays" style="gap:8px;">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Side Agenda Schedule -->
+          <div class="haven-card">
+            <div class="card-title-row">
+              <h3 class="card-title">Timeline Agenda</h3>
+              <span style="font-size:0.8rem; color:var(--c-text-faint);">Chronological</span>
+            </div>
+            <div class="dates-timeline" id="dedicatedMilestonesList">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 4: DEDICATED HABITS GARDEN
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewHabits">
+      <div class="dedicated-view-container">
+        <div class="view-header-row">
+          <div>
+            <h2 class="view-title">🌱 Goals & Habits Garden</h2>
+            <p class="view-subtitle">Water your daily habits and watch your consistency blossom.</p>
+          </div>
+          <button type="button" class="btn-primary-action" onclick="App.toggleAddHabitForm()">
+            + Add Habit
+          </button>
+        </div>
+
+        <div class="habits-garden-grid" id="dedicatedHabitsContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 5: DEDICATED NOTES & SCRATCHPAD
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewNotes">
+      <div class="dedicated-view-container">
+        <div class="view-header-row">
+          <div>
+            <h2 class="view-title">📝 Notes & Thoughts Scratchpad</h2>
+            <p class="view-subtitle">Pin doodles, ideas, and reflections. Easily convert any thought into a task.</p>
+          </div>
+          <button type="button" class="btn-primary-action" onclick="App.openQuickAddNote()">
+            + New Note
+          </button>
+        </div>
+
+        <!-- Notes Search & Filter -->
+        <div class="task-search-box" style="margin-bottom:20px; max-width:400px;">
+          <span>🔍</span>
+          <input type="text" id="notesSearchInput" placeholder="Search notes..." oninput="App.renderDedicatedNotes()" />
+        </div>
+
+        <div class="notes-pinboard-grid" id="dedicatedNotesContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 6: DEDICATED MEMORIES SCRAPBOOK
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewMemories">
+      <div class="dedicated-view-container">
+        <div class="view-header-row">
+          <div>
+            <h2 class="view-title">📷 Memories Scrapbook</h2>
+            <p class="view-subtitle">Capture gentle moments, golden hour walks, and memories to cherish.</p>
+          </div>
+          <button type="button" class="btn-primary-action" onclick="App.openAddMemoryModal()">
+            + Add Memory Photo
+          </button>
+        </div>
+
+        <div class="memories-scrapbook-grid" id="dedicatedMemoriesContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 7: DEDICATED FOCUS POMODORO SANCTUARY
+         ====================================================================== -->
+    <section class="dashboard-view-panel" id="viewFocus">
+      <div class="dedicated-view-container">
+        <div class="focus-sanctuary-full">
+          <div class="focus-header">
+            <h2 class="view-title" style="font-size:2rem;">⏱️ Deep Focus Sanctuary</h2>
+            <p class="view-subtitle">Eliminate noise. Immerse in calming focus sessions accompanied by forest audio.</p>
+          </div>
+
+          <div class="focus-mode-switcher-strip">
+            <button type="button" class="pomo-mode-tab active" data-mode="focus" onclick="App.setPomodoroMode('focus')">25m Deep Work</button>
+            <button type="button" class="pomo-mode-tab" data-mode="short" onclick="App.setPomodoroMode('short')">5m Tea Break</button>
+            <button type="button" class="pomo-mode-tab" data-mode="long" onclick="App.setPomodoroMode('long')">15m Stroll</button>
+          </div>
+
+          <div class="focus-timer-ring-container">
+            <svg class="focus-ring-svg" viewBox="0 0 300 300">
+              <circle cx="150" cy="150" r="130" class="focus-ring-bg" />
+              <circle cx="150" cy="150" r="130" class="focus-ring-progress" id="focusRingProgress" />
+            </svg>
+            <div class="focus-center-display">
+              <div class="focus-huge-time" id="focusHugeTime">25:00</div>
+              <div class="focus-status-text" id="focusHugeStatus">Ready for gentle focus</div>
+            </div>
+          </div>
+
+          <div class="focus-action-buttons-row">
+            <button type="button" class="btn-focus-master play" id="focusMasterPlayBtn" onclick="App.togglePomodoro()">
+              Start Focus Session
+            </button>
+            <button type="button" class="btn-focus-master reset" onclick="App.resetPomodoro()">
+              Reset Timer
+            </button>
+          </div>
+
+          <!-- Ambient sound quick bar inside Focus view -->
+          <div class="focus-sound-preset-row">
+            <span style="font-size:0.85rem; font-weight:700; color:var(--c-text-muted);">Ambient Companion:</span>
+            <button type="button" class="focus-sound-btn" onclick="App.startAmbientWithTrack('rain')">🌧️ Rain</button>
+            <button type="button" class="focus-sound-btn" onclick="App.startAmbientWithTrack('breeze')">🍃 Breeze</button>
+            <button type="button" class="focus-sound-btn" onclick="App.startAmbientWithTrack('birds')">🐦 Morning Birds</button>
+            <button type="button" class="focus-sound-btn mute" onclick="App.stopAmbientSound()">🔇 Silence</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ========================================================================
+       Modals: Memory Detail, Add Memory, Day Inspector, Account, Add Task
+       ======================================================================== -->
+
+  <!-- 1. Memory Detail & Note Viewer Modal -->
+  <div class="modal-backdrop" id="memoryDetailModal" onclick="if(event.target === this) App.closeMemoryDetailModal()">
+    <div class="modal-card-box">
+      <button type="button" class="modal-close-btn" onclick="App.closeMemoryDetailModal()">✕</button>
+      
+      <div style="text-align:center;">
+        <div class="modal-photo-wrapper">
+          <img id="modalMemoryImg" src="" alt="Memory Photo" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+        <h3 id="modalMemoryCaption" style="font-family:var(--font-hand); font-size:1.6rem; color:var(--c-text-deep); margin-bottom:2px;"></h3>
+        <span id="modalMemoryDate" style="font-size:0.75rem; font-weight:800; color:var(--c-text-faint); letter-spacing:0.08em; text-transform:uppercase;"></span>
+      </div>
+
+      <div class="modal-note-body" id="modalMemoryNote"></div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px;">
+        <button type="button" onclick="App.deleteCurrentMemory()" style="background:transparent; border:none; color:#C94A3D; font-weight:700; font-size:0.85rem; cursor:pointer;">Delete Memory</button>
+        <button type="button" onclick="App.closeMemoryDetailModal()" class="btn-primary-action" style="padding:6px 20px;">Done 🌸</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Add Memory Creator Modal -->
+  <div class="modal-backdrop" id="addMemoryModal" onclick="if(event.target === this) App.closeAddMemoryModal()">
+    <div class="modal-card-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3 style="font-family:var(--font-main); font-weight:800; color:var(--c-text-deep);">📷 Add Picture to Memories</h3>
+        <button type="button" class="modal-close-btn" onclick="App.closeAddMemoryModal()">✕</button>
+      </div>
+
+      <form onsubmit="App.saveNewMemory(event);">
+        <div style="margin-bottom:12px;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--c-text-muted); display:block; margin-bottom:4px;">Upload Picture From Computer</label>
+          <input type="file" id="newMemFileInput" accept="image/*" style="width:100%; padding:8px; background:#FFF; border:1px solid #D6CEBE; border-radius:10px; font-size:0.85rem;" />
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--c-text-muted); display:block; margin-bottom:4px;">Or Choose Ghibli Artwork Preset</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; cursor:pointer;">
+              <input type="radio" name="presetMemRadio" value="assets/images/ghibli-sunset-hills.jpg" checked /> Sunset Hills
+            </label>
+            <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; cursor:pointer;">
+              <input type="radio" name="presetMemRadio" value="assets/images/ghibli-cottage.jpg" /> Cottage
+            </label>
+            <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; cursor:pointer;">
+              <input type="radio" name="presetMemRadio" value="assets/images/ghibli-study-tea.jpg" /> Tea Desk
+            </label>
+            <label style="display:flex; align-items:center; gap:4px; font-size:0.8rem; cursor:pointer;">
+              <input type="radio" name="presetMemRadio" value="assets/images/ghibli-spirits.jpg" /> Spirits Forest
+            </label>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px; margin-bottom:12px;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:var(--c-text-muted); display:block; margin-bottom:4px;">Caption</label>
+            <input type="text" id="newMemCaption" placeholder="e.g. Autumn golden light ✨" style="width:100%; padding:9px 12px; border-radius:10px; border:1px solid #D6CEBE; font-family:var(--font-main); outline:none;" required />
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:var(--c-text-muted); display:block; margin-bottom:4px;">Date</label>
+            <input type="date" id="newMemDate" style="width:100%; padding:8px 8px; border-radius:10px; border:1px solid #D6CEBE; font-family:var(--font-main); outline:none;" />
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--c-text-muted); display:block; margin-bottom:4px;">Write a Small Note / Story</label>
+          <textarea id="newMemNote" placeholder="Write something memorable about this moment so you can open and remember it anytime..." style="width:100%; height:80px; padding:9px 12px; border-radius:10px; border:1px solid #D6CEBE; font-family:var(--font-main); outline:none; resize:none;"></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" onclick="App.closeAddMemoryModal()" class="btn-cancel-action">Cancel</button>
+          <button type="submit" class="btn-primary-action">Save Memory 📸</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Day Agenda Inspector Modal -->
+  <div class="modal-backdrop" id="dayInspectorModal" onclick="if(event.target === this) App.closeDayInspector()">
+    <div class="modal-card-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3 id="inspectorDateTitle" style="font-family:var(--font-main); font-weight:800; color:var(--c-text-deep);"></h3>
+        <button type="button" class="modal-close-btn" onclick="App.closeDayInspector()">✕</button>
+      </div>
+
+      <div id="inspectorBody" style="background:#FFFFFF; border:1px solid #E4DCCF; border-radius:12px; padding:14px; max-height:220px; overflow-y:auto; margin-bottom:14px;"></div>
+
+      <!-- Add Task for Selected Day -->
+      <form style="display:flex; gap:8px; margin-bottom:12px;" onsubmit="event.preventDefault(); App.addTaskForSelectedDay();">
+        <input type="text" id="inspectorTaskInput" placeholder="Add task for this date..." style="flex:1; padding:8px 12px; border:1px solid #C4D6BD; border-radius:10px; font-size:0.86rem; font-family:var(--font-main); outline:none;" required />
+        <button type="submit" class="btn-primary-action" style="padding:6px 14px;">+ Add</button>
+      </form>
+
+      <div style="text-align:right;">
+        <button type="button" onclick="App.closeDayInspector()" class="btn-cancel-action">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Account Details Modal -->
+  <div class="modal-backdrop" id="accountDetailsModal" onclick="if(event.target === this) App.closeAccountModal()">
+    <div class="modal-card-box" style="max-width:400px; padding:28px 24px;">
+      <button type="button" class="modal-close-btn" onclick="App.closeAccountModal()">✕</button>
+
+      <div class="account-modal-body">
+        <div class="account-avatar-crest">🌿</div>
+        <h3 class="account-user-name" id="accModalName">Forest Wanderer</h3>
+        <p class="account-user-email" id="accModalEmail">wanderer@forest.me</p>
+
+        <div class="account-stats-row">
+          <div class="account-stat-box">
+            <div class="account-stat-num" id="accStatTasks">0</div>
+            <div class="account-stat-label">Tasks Done</div>
+          </div>
+          <div class="account-stat-box">
+            <div class="account-stat-num" id="accStatMemories">0</div>
+            <div class="account-stat-label">Memories Saved</div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-account-logout" onclick="App.logout()">
+          🚪 Log Out of Sanctuary
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Floating Nav Dock -->
+  <nav class="floating-dock-bottom" aria-label="Sanctuary Navigation Dock">
+    <div class="dock-pill-container">
+      <button type="button" class="dock-item-btn active" data-tab="home" onclick="App.switchDashboardView('overview')">
+        <span>🏠 Overview</span>
+      </button>
+
+      <span class="dock-dot-sep">·</span>
+
+      <button type="button" class="dock-item-btn" data-tab="tasks" onclick="App.switchDashboardView('tasks')">
+        <span>✓ Tasks</span>
+      </button>
+
+      <span class="dock-dot-sep">·</span>
+
+      <button type="button" class="dock-item-btn" data-tab="calendar" onclick="App.switchDashboardView('calendar')">
+        <span>📅 Calendar</span>
+      </button>
+
+      <span class="dock-dot-sep">·</span>
+
+      <button type="button" class="dock-item-btn" data-tab="memories" onclick="App.switchDashboardView('memories')">
+        <span>♡ Memories</span>
+      </button>
+
+      <span class="dock-dot-sep">·</span>
+
+      <button type="button" class="dock-item-btn" data-tab="more" onclick="App.openAccountModal()" title="Account details & log out">
+        <span>👤 Account</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

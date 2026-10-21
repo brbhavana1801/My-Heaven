@@ -1,0 +1,1244 @@
+/* ==========================================================================
+   little haven ♡ — Component Styles & Interactive Modules
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. My Tasks & Low-Pressure To-Do
+   -------------------------------------------------------------------------- */
+
+.tasks-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.category-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.category-filter-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-pill {
+  background: var(--c-sage-wash);
+  border: 1px solid var(--c-sage-soft);
+  color: var(--c-pine-muted);
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-gentle);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-pill:hover {
+  background: var(--c-matcha);
+  color: var(--c-moss-deep);
+}
+
+.filter-pill.active {
+  background: var(--c-moss-deep);
+  color: #FAF7EE;
+  border-color: var(--c-moss-deep);
+  box-shadow: 0 2px 8px rgba(77, 94, 57, 0.25);
+}
+
+.pill-count {
+  font-size: 0.74rem;
+  background: rgba(255, 255, 255, 0.35);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.filter-pill.active .pill-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* Quick Inline Task Creator */
+.task-inline-add {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--c-parchment-bg);
+  border: 1px dashed var(--c-sage);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  transition: var(--transition-smooth);
+}
+
+.task-inline-add:focus-within {
+  border-style: solid;
+  border-color: var(--c-moss-mid);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(163, 184, 153, 0.25);
+}
+
+.task-inline-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--c-pine-bark);
+  outline: none;
+}
+
+.task-inline-input::placeholder {
+  color: var(--c-pine-faint);
+}
+
+.task-inline-category-select {
+  background: var(--c-matcha-light);
+  border: 1px solid var(--c-matcha);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-moss-deep);
+  padding: 4px 8px;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-inline-submit {
+  background: var(--c-moss-deep);
+  color: #FFFFFF;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition-gentle);
+}
+
+.btn-inline-submit:hover {
+  background: var(--c-moss-mid);
+  transform: scale(1.08);
+}
+
+/* Task List Items */
+.tasks-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  transition: var(--transition-gentle);
+  position: relative;
+}
+
+.task-item:hover {
+  border-color: var(--c-sage);
+  box-shadow: var(--shadow-warm-sm);
+  transform: translateX(2px);
+}
+
+.task-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Custom Rounded Checkbox */
+.custom-checkbox-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 2px solid var(--c-sage);
+  background: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: var(--transition-gentle);
+}
+
+.custom-checkbox-btn:hover {
+  border-color: var(--c-moss-mid);
+  background: var(--c-sage-wash);
+}
+
+.task-item.completed .custom-checkbox-btn {
+  background: var(--c-moss-deep);
+  border-color: var(--c-moss-deep);
+  color: #FAF7EE;
+}
+
+.checkbox-checkmark {
+  display: none;
+  font-size: 0.78rem;
+  font-weight: bold;
+}
+
+.task-item.completed .checkbox-checkmark {
+  display: block;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--c-pine-bark);
+  line-height: 1.35;
+  transition: var(--transition-smooth);
+}
+
+.task-item.completed .task-title {
+  color: var(--c-pine-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--c-sage);
+}
+
+.task-meta-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Category Badges */
+.badge-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.badge-category.college {
+  background: #EBF3E5;
+  color: #385025;
+}
+.badge-category.gate-prep {
+  background: #E8EEFB;
+  color: #2D4875;
+}
+.badge-category.nptel {
+  background: #F8EFE0;
+  color: #8C531F;
+}
+.badge-category.personal {
+  background: #FCECE9;
+  color: #8A3A2C;
+}
+
+/* Due Date Chip */
+.task-due-chip {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--c-pine-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--c-parchment-bg);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+.task-due-chip.today {
+  background: var(--c-acorn-soft);
+  color: #83521E;
+  font-weight: 600;
+}
+
+/* Low-Pressure Actions: Reschedule & Delete */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-reschedule {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--c-matcha-light);
+  border: 1px solid var(--c-matcha);
+  color: var(--c-moss-deep);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-gentle);
+  white-space: nowrap;
+}
+
+.btn-reschedule:hover {
+  background: var(--c-matcha);
+  transform: translateY(-1px);
+}
+
+.btn-task-delete {
+  background: transparent;
+  border: none;
+  color: var(--c-pine-faint);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.btn-task-delete:hover {
+  color: var(--c-terracotta);
+  background: #FCECE9;
+}
+
+.tasks-empty-state {
+  text-align: center;
+  padding: 36px 16px;
+  color: var(--c-pine-faint);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tasks-empty-state .empty-icon {
+  font-size: 2.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. Upcoming Dates & Milestones (Agenda)
+   -------------------------------------------------------------------------- */
+
+.milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.milestone-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--c-parchment-bg);
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-md);
+  transition: var(--transition-gentle);
+}
+
+.milestone-item:hover {
+  background: #FFFFFF;
+  border-color: var(--c-sage);
+  transform: translateX(2px);
+  box-shadow: var(--shadow-warm-sm);
+}
+
+.milestone-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.milestone-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+.milestone-dot.college { background: #4D5E39; }
+.milestone-dot.exam { background: #4A6382; }
+.milestone-dot.celebration { background: #D99B66; }
+.milestone-dot.personal { background: #B35848; }
+
+.milestone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.milestone-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--c-pine-bark);
+}
+
+.milestone-date-str {
+  font-size: 0.76rem;
+  color: var(--c-pine-faint);
+}
+
+.milestone-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-chip {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--c-matcha);
+  color: var(--c-moss-deep);
+  white-space: nowrap;
+}
+
+.countdown-chip.imminent {
+  background: var(--c-amber-warm);
+  color: #FFFFFF;
+}
+
+.btn-milestone-delete {
+  background: transparent;
+  border: none;
+  color: var(--c-pine-faint);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.milestone-item:hover .btn-milestone-delete {
+  opacity: 1;
+}
+
+.btn-milestone-delete:hover {
+  color: var(--c-terracotta);
+}
+
+/* --------------------------------------------------------------------------
+   3. Scrapbook Memories (Polaroid Photo Card)
+   -------------------------------------------------------------------------- */
+
+.memories-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.polaroid-card-wrapper {
+  perspective: 1000px;
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+}
+
+.polaroid-card {
+  background: #FFFFFF;
+  padding: 12px 12px 24px 12px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-polaroid);
+  position: relative;
+  transform: rotate(-1.5deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  user-select: none;
+}
+
+.polaroid-card:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 0 16px 36px rgba(36, 46, 33, 0.2);
+}
+
+/* Botanical Washi Tape Sticker on Top */
+.washi-tape-strip {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 26px;
+  background-color: rgba(220, 227, 200, 0.85);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(163, 184, 153, 0.35),
+    rgba(163, 184, 153, 0.35) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  border-left: 2px dashed rgba(255, 255, 255, 0.8);
+  border-right: 2px dashed rgba(255, 255, 255, 0.8);
+  z-index: 3;
+}
+
+.polaroid-photo-frame {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #EAE6DB;
+  position: relative;
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.polaroid-card:hover .polaroid-img {
+  transform: scale(1.04);
+}
+
+.polaroid-caption-area {
+  padding-top: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.polaroid-caption {
+  font-family: var(--font-hand);
+  font-size: 1.42rem;
+  color: var(--c-pine-bark);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.polaroid-datestamp {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-pine-faint);
+  font-weight: 700;
+}
+
+/* Polaroid Carousel / Controls */
+.memory-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 340px;
+  padding: 0 8px;
+}
+
+.memory-nav-btn {
+  background: var(--c-matcha-light);
+  border: 1px solid var(--c-matcha);
+  color: var(--c-moss-deep);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-gentle);
+}
+
+.memory-nav-btn:hover {
+  background: var(--c-moss-deep);
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+.memory-counter-text {
+  font-size: 0.82rem;
+  color: var(--c-pine-muted);
+  font-weight: 600;
+}
+
+.btn-add-memory {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c-matcha-light);
+  border: 1px dashed var(--c-sage);
+  color: var(--c-moss-deep);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-add-memory:hover {
+  background: var(--c-matcha);
+  border-style: solid;
+}
+
+/* --------------------------------------------------------------------------
+   4. Little Notes & Ideas (Pinboard)
+   -------------------------------------------------------------------------- */
+
+.sticky-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.sticky-note-card {
+  position: relative;
+  background: var(--sticky-buttercup);
+  border: 1px solid var(--sticky-buttercup-border);
+  border-radius: 6px;
+  padding: 24px 14px 14px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sticky);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transform: rotate(-0.5deg);
+}
+
+.sticky-note-card:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+.sticky-note-card:hover {
+  transform: rotate(0deg) translateY(-3px) scale(1.02);
+  box-shadow: 4px 8px 18px rgba(80, 60, 30, 0.15);
+  z-index: 5;
+}
+
+.sticky-note-card.color-matcha {
+  background: var(--sticky-matcha);
+  border-color: var(--sticky-matcha-border);
+}
+
+.sticky-note-card.color-peach {
+  background: var(--sticky-peach);
+  border-color: var(--sticky-peach-border);
+}
+
+.sticky-note-card.color-sky {
+  background: var(--sticky-sky);
+  border-color: var(--sticky-sky-border);
+}
+
+/* Red 3D Push Pin */
+.sticky-push-pin {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 35% 35%, #F07067 0%, #D83C30 70%, #901B12 100%);
+  border-radius: 50%;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  z-index: 3;
+}
+
+.sticky-push-pin::after {
+  content: '';
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 5px;
+  background: #737373;
+  border-radius: 0 0 1px 1px;
+}
+
+.sticky-content {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  line-height: 1.35;
+  color: var(--c-pine-bark);
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin-bottom: 12px;
+}
+
+.sticky-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.sticky-date {
+  font-size: 0.68rem;
+  color: var(--c-pine-faint);
+  font-weight: 600;
+}
+
+.sticky-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-convert-to-task {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--c-moss-deep);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition-smooth);
+}
+
+.btn-convert-to-task:hover {
+  background: var(--c-moss-deep);
+  color: #FFFFFF;
+}
+
+.btn-sticky-delete {
+  background: transparent;
+  border: none;
+  color: var(--c-pine-faint);
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.btn-sticky-delete:hover {
+  color: var(--c-terracotta);
+}
+
+/* --------------------------------------------------------------------------
+   5. Gentle Goals & Habit Sprouts
+   -------------------------------------------------------------------------- */
+
+.habits-summary-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--c-sage-wash);
+  border: 1px solid var(--c-sage-soft);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.sprout-progress-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sprout-icon-large {
+  font-size: 1.8rem;
+  display: inline-block;
+  animation: sproutWobble 4s ease-in-out infinite;
+}
+
+@keyframes sproutWobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.sprout-text-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sprout-headline {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--c-moss-deep);
+}
+
+.sprout-subline {
+  font-size: 0.78rem;
+  color: var(--c-pine-muted);
+}
+
+/* Sprout Growth Bar */
+.sprout-growth-meter-track {
+  width: 100%;
+  height: 8px;
+  background: var(--c-parchment-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.sprout-growth-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-sage) 0%, var(--c-moss-deep) 100%);
+  border-radius: var(--radius-pill);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.habit-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-md);
+  transition: var(--transition-gentle);
+  cursor: pointer;
+  user-select: none;
+}
+
+.habit-card:hover {
+  border-color: var(--c-sage);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-warm-sm);
+}
+
+.habit-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.habit-icon {
+  font-size: 1.25rem;
+}
+
+.habit-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.habit-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--c-pine-bark);
+}
+
+.habit-target {
+  font-size: 0.74rem;
+  color: var(--c-pine-faint);
+}
+
+.habit-sprout-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c-parchment-bg);
+  border: 1.5px dashed var(--c-sage);
+  font-size: 1.15rem;
+  transition: var(--transition-gentle);
+}
+
+.habit-card.nurtured .habit-sprout-toggle {
+  background: var(--c-matcha);
+  border-style: solid;
+  border-color: var(--c-moss-deep);
+  transform: scale(1.12);
+}
+
+/* --------------------------------------------------------------------------
+   6. Universal Quick-Add Modal & Overlays
+   -------------------------------------------------------------------------- */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(36, 46, 33, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: #FFFFFF;
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 50px rgba(36, 46, 33, 0.25);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+  transform: translateY(24px) scale(0.96);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-backdrop.active .modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--c-parchment-border);
+  background: var(--c-parchment-bg);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--c-moss-deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--c-pine-faint);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.btn-modal-close:hover {
+  color: var(--c-pine-bark);
+  background: var(--c-parchment-alt);
+}
+
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--c-parchment-border);
+  background: var(--c-parchment-bg);
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.modal-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--c-pine-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.modal-tab-btn:hover {
+  color: var(--c-moss-deep);
+}
+
+.modal-tab-btn.active {
+  color: var(--c-moss-deep);
+  border-bottom-color: var(--c-moss-deep);
+}
+
+.modal-body {
+  padding: 22px 24px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--c-pine-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--c-parchment-bg);
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--c-pine-bark);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--c-moss-mid);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(163, 184, 153, 0.25);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--c-parchment-border);
+  color: var(--c-pine-muted);
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  background: var(--c-parchment-alt);
+  color: var(--c-pine-bark);
+}
+
+.btn-primary {
+  background: var(--c-moss-deep);
+  border: none;
+  color: #FFFFFF;
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(77, 94, 57, 0.25);
+  transition: var(--transition-gentle);
+}
+
+.btn-primary:hover {
+  background: var(--c-moss-mid);
+  transform: translateY(-1px);
+}
+
+/* Preset Picker Grid for Memories */
+.memory-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.preset-thumb {
+  aspect-ratio: 4/3;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.preset-thumb.selected {
+  border-color: var(--c-moss-deep);
+  box-shadow: 0 0 0 2px var(--c-matcha);
+}
+
+.preset-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7. Ambient Soundscape Modal & Controls
+   -------------------------------------------------------------------------- */
+
+.soundscape-popover {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #FFFFFF;
+  border: 1px solid var(--c-parchment-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-warm-lg);
+  padding: 18px 20px;
+  width: 290px;
+  z-index: 100;
+  display: none;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.soundscape-popover.active {
+  display: block;
+}
+
+.soundscape-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c-moss-deep);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sound-track-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background 0.2s;
+}
+
+.sound-track-option:hover {
+  background: var(--c-sage-wash);
+}
+
+.sound-track-option.active {
+  background: var(--c-matcha-light);
+  color: var(--c-moss-deep);
+  font-weight: 600;
+}
+
+.volume-slider-group {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--c-parchment-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-slider {
+  flex: 1;
+  accent-color: var(--c-moss-deep);
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   8. Calming Mindful Breathing Circle (Study Break)
+   -------------------------------------------------------------------------- */
+
+.breath-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 18px;
+}
+
+.breath-circle-outer {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--c-matcha) 0%, var(--c-sage-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(163, 184, 153, 0.4);
+  animation: breathCycle 12s ease-in-out infinite;
+}
+
+.breath-circle-inner {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--c-moss-deep);
+  font-weight: 600;
+}
+
+@keyframes breathCycle {
+  0%, 100% {
+    transform: scale(0.85);
+  }
+  33% {
+    transform: scale(1.22);
+  }
+  66% {
+    transform: scale(1.22);
+  }
+}
+
+.breath-text-guide {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--c-pine-bark);
+  text-align: center;
+}
