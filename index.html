@@ -9,6 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23475E3E'/><path d='M16 6 C10 12 10 20 16 26 C22 20 22 12 16 6 Z' fill='%23DCE3C8'/></svg>">
   
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/report.css">
 </head>
 <body>
 
@@ -246,6 +247,11 @@
           <input type="range" class="sound-vol-slider" id="soundVolSlider" min="0" max="1" step="0.05" value="0.45" oninput="App.changeAmbientVolume(this.value)" title="Volume Slider" />
         </div>
 
+        <!-- Standalone Executive Report Button -->
+        <a href="report.html" target="_blank" class="top-report-btn" title="Open Executive Productivity Report (Printable / PDF Ready)">
+          <span>📜 Executive Report</span>
+        </a>
+
         <!-- Quick "+ New" Master Add Action -->
         <div class="quick-add-dropdown-container">
           <button type="button" class="btn-quick-add-master" onclick="App.toggleQuickAddMenu()" title="Quick Add New Item">
@@ -368,6 +374,10 @@
         <button type="button" class="dash-tab-btn" data-view="focus" onclick="App.switchDashboardView('focus')">
           <span class="tab-icon">⏱️</span>
           <span>Focus Pomodoro</span>
+        </button>
+        <button type="button" class="dash-tab-btn" data-view="report" onclick="App.switchDashboardView('report')">
+          <span class="tab-icon">📜</span>
+          <span>Executive Report</span>
         </button>
       </div>
     </nav>
@@ -885,6 +895,34 @@
         </div>
       </div>
     </section>
+
+    <!-- ======================================================================
+         VIEW 8: EXECUTIVE PRODUCTIVITY & LIFE REPORT (A4 Printable 2-Page View)
+         ====================================================================== -->
+    <main class="dashboard-view-panel" id="viewReport">
+      <div class="report-embed-container">
+        <!-- In-App Report Header Controls -->
+        <div class="report-embed-banner">
+          <div class="report-embed-banner-left">
+            <span style="font-size:1.8rem;">📜</span>
+            <div>
+              <div class="report-embed-banner-title">Studio Ghibli Forest Sanctuary · Executive Report</div>
+              <div class="report-embed-banner-sub">Official 2-Page Executive Productivity &amp; Life Snapshot (A4 Print &amp; PDF Ready)</div>
+            </div>
+          </div>
+          <div class="report-embed-banner-actions">
+            <a href="report.html" target="_blank" class="rep-btn rep-btn-primary" title="Open Clean Printable Page">
+              ↗ Open Dedicated Page &amp; Print PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- Embedded Iframe of report.html for 100% faithful, interactive presentation -->
+        <div style="background:#FFF; border-radius:18px; box-shadow:0 8px 30px rgba(0,0,0,0.08); overflow:hidden; border:1px solid #E8E5DC;">
+          <iframe id="reportIframe" src="report.html" style="width:100%; height:1200px; border:none; display:block;" title="Executive Report Preview"></iframe>
+        </div>
+      </div>
+    </main>
 
   </div>
 

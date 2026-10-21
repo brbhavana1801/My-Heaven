@@ -3,19 +3,19 @@
    ========================================================================== */
 
 const STORAGE_KEYS = {
-  AUTH: 'little_haven_auth_user_v2',
-  USERS: 'little_haven_registered_users_v2',
-  TASKS: 'little_haven_tasks_v2',
-  MILESTONES: 'little_haven_milestones_v2',
-  MEMORIES: 'little_haven_memories_v2',
-  NOTES: 'little_haven_notes_v2',
-  HABITS: 'little_haven_habits_v2',
-  MOOD: 'little_haven_mood_v2',
-  SETTINGS: 'little_haven_settings_v2'
+  AUTH: 'little_haven_auth_user_v3',
+  USERS: 'little_haven_registered_users_v3',
+  TASKS: 'little_haven_tasks_v3',
+  MILESTONES: 'little_haven_milestones_v3',
+  MEMORIES: 'little_haven_memories_v3',
+  NOTES: 'little_haven_notes_v3',
+  HABITS: 'little_haven_habits_v3',
+  MOOD: 'little_haven_mood_v3',
+  SETTINGS: 'little_haven_settings_v3'
 };
 
 const COZY_QUOTES = [
-  "Take today one thing at a time ✨",
+  "Take today one gentle thing at a time ✨",
   "A heart's a heavy burden, so rest a moment 🌿",
   "Always believe in yourself. You have nothing to fear 🍃",
   "You are doing wonderfully, even in quiet little steps 🍄",
@@ -97,68 +97,99 @@ const HavenStorage = {
     localStorage.removeItem(STORAGE_KEYS.AUTH);
   },
 
-  // Tasks (User-driven, persists in localStorage)
+  // Tasks (Matching Executive Productivity & Life Report)
   getTasks() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.TASKS);
       if (data) return JSON.parse(data);
-      // Starter tasks matching reference image
       return [
         {
           id: 't-1',
-          title: 'Complete GATE practice',
-          category: 'GATE Prep',
+          title: 'Morning matcha ritual & silent meditation',
+          description: 'Breathe in ceremonial green tea aroma. 10 minutes stillness by window.',
+          category: 'Wellness & Tea',
+          priority: 'GENTLE',
           dueDate: getRelativeDateString(0),
-          completed: false,
-          color: 'green'
+          completed: true,
+          color: 'green',
+          subtasks: [
+            { title: 'Whisk warm ceremonial grade green tea', done: true },
+            { title: 'Sit quietly beside sunlight and breathe', done: true }
+          ]
         },
         {
           id: 't-2',
-          title: 'Submit NPTEL assignment',
-          category: 'NPTEL',
+          title: 'Design watercolor moodboard for sanctuary desk',
+          description: 'Blend olive green, cherry blossom pink, honeycomb yellow on cold-press paper.',
+          category: 'Creative',
+          priority: 'DEEP FOCUS',
           dueDate: getRelativeDateString(0),
           completed: false,
-          color: 'amber'
+          inProgress: true,
+          color: 'peach',
+          subtasks: [
+            { title: 'Select earth pigment swatches', done: true },
+            { title: 'Sketch vine borders & soot sprites', done: false }
+          ]
         },
         {
           id: 't-3',
-          title: 'Submit assignment',
-          category: 'General',
-          dueDate: getRelativeDateString(1),
+          title: 'Water terrarium moss & mist balcony ferns',
+          description: 'Check moisture balance. Mist delicate maidenhair ferns with fresh rainwater.',
+          category: 'Garden & Nature',
+          priority: 'QUICK WIN',
+          dueDate: getRelativeDateString(0),
           completed: false,
-          color: 'peach'
+          inProgress: true,
+          color: 'amber',
+          subtasks: []
         },
         {
           id: 't-4',
-          title: 'Complete foreening',
-          category: 'Prep',
+          title: 'Polish sanctuary web layout & theme variables',
+          description: 'Ensure silky smooth micro-animations, glassmorphism borders, tactile responsiveness.',
+          category: 'Work & Code',
+          priority: 'DEEP FOCUS',
           dueDate: getRelativeDateString(1),
           completed: false,
-          color: 'sage'
+          color: 'sage',
+          subtasks: [
+            { title: 'Test dark midnight theme palettes', done: true },
+            { title: 'Verify mobile touch responsiveness', done: false }
+          ]
         },
         {
           id: 't-5',
-          title: 'Complete GATE practice',
-          category: 'GATE Prep',
-          dueDate: getRelativeDateString(2),
+          title: 'Read chapter 4 of The Wind Rises by the hearth',
+          description: 'Take quiet notes on pastoral scenery reflections and architectural sketches.',
+          category: 'Study & Reading',
+          priority: 'GENTLE',
+          dueDate: getRelativeDateString(1),
           completed: false,
-          color: 'green'
+          color: 'green',
+          subtasks: []
         },
         {
           id: 't-6',
-          title: 'Submit GATE study',
-          category: 'GATE Study',
-          dueDate: getRelativeDateString(3),
+          title: 'Visit weekend organic herbalists market',
+          description: 'Pick up dried chamomile flowers, lavender sprigs, and wildflower clover honey.',
+          category: 'Daily Life',
+          priority: 'GENTLE',
+          dueDate: getRelativeDateString(2),
           completed: false,
-          color: 'amber'
+          color: 'amber',
+          subtasks: []
         },
         {
           id: 't-7',
-          title: 'Conmit add',
-          category: 'Coding',
-          dueDate: getRelativeDateString(0),
+          title: 'Organize digital notes into curated knowledge garden',
+          description: 'Archive stale bookmarks and categorize peaceful project inspirations.',
+          category: 'Work & Code',
+          priority: 'QUICK WIN',
+          dueDate: getRelativeDateString(3),
           completed: false,
-          color: 'sky'
+          color: 'sky',
+          subtasks: []
         }
       ];
     } catch (e) {
@@ -169,7 +200,7 @@ const HavenStorage = {
     localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
   },
 
-  // Upcoming Dates & Milestones (Matching reference image)
+  // Upcoming Milestones & Agenda Schedule (Matching Report)
   getMilestones() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.MILESTONES);
@@ -177,27 +208,39 @@ const HavenStorage = {
       return [
         {
           id: 'm-1',
-          title: 'Submissions 📋',
-          subtitle: 'January 1 - 20:30',
-          date: getRelativeDateString(3),
-          category: 'amber',
-          label: 'Submissions'
+          title: 'Spring Blossom Walk & Sketching 🌸',
+          subtitle: 'Golden hour stroll with sketchbook & charcoal pigments',
+          date: getRelativeDateString(2),
+          daysBadge: '+2 DAYS',
+          badgeClass: 'd2',
+          category: 'green'
         },
         {
           id: 'm-2',
-          title: 'Common jurtters',
-          subtitle: 'Community study review',
-          date: getRelativeDateString(5),
-          category: 'green',
-          label: 'Common jurtters'
+          title: 'Studio Web Architecture Showcase 🚀',
+          subtitle: 'Present new interactive dashboard experience',
+          date: getRelativeDateString(4),
+          daysBadge: '+4 DAYS',
+          badgeClass: 'd4',
+          category: 'teal'
         },
         {
           id: 'm-3',
-          title: 'Birthday 🎂',
-          subtitle: 'Sweet pastries & celebration',
-          date: getRelativeDateString(8),
-          category: 'celebration',
-          label: 'Birthday'
+          title: 'Botanical Herbarium Workshop 🌿',
+          subtitle: 'Pressing wild mountain ferns & clover blossoms',
+          date: getRelativeDateString(7),
+          daysBadge: '+7 DAYS',
+          badgeClass: 'd7',
+          category: 'caramel'
+        },
+        {
+          id: 'm-4',
+          title: 'Sanctuary Birthday Gathering 🎂',
+          subtitle: 'Fresh strawberry shortcake & herbal brews with loved ones',
+          date: getRelativeDateString(11),
+          daysBadge: '+11 DAYS',
+          badgeClass: 'd11',
+          category: 'rose'
         }
       ];
     } catch (e) {
@@ -217,16 +260,18 @@ const HavenStorage = {
         {
           id: 'mem-1',
           image: 'assets/images/ghibli-sunset-hills.jpg',
-          caption: 'Today was magic ✨',
-          note: 'Walking through the sunlit hills at sunset. The wind was gentle and carrying the scent of wild pine needles.',
-          date: getRelativeDateString(0)
+          caption: 'Golden Sunset Hills ✨',
+          note: 'Walking through sunlit hills at golden sunset. The wind was carrying the sweet scent of wild mountain flowers.',
+          date: getRelativeDateString(0),
+          displayDate: 'Today'
         },
         {
           id: 'mem-2',
           image: 'assets/images/ghibli-cottage.jpg',
-          caption: 'Cottage sanctuary 🏡🍃',
-          note: 'A quiet afternoon in the moss woods. Brewed herbal chamomile tea and listened to raindrops.',
-          date: getRelativeDateString(-2)
+          caption: 'Cottage Sanctuary 🏡🍃',
+          note: 'A quiet afternoon in moss woods. Brewed chamomile tea and listened to raindrops tapping on wooden roof.',
+          date: getRelativeDateString(-2),
+          displayDate: '2 days ago'
         }
       ];
     } catch (e) {
@@ -237,7 +282,7 @@ const HavenStorage = {
     localStorage.setItem(STORAGE_KEYS.MEMORIES, JSON.stringify(memories));
   },
 
-  // Little Notes & Thoughts
+  // Sanctuary Reflections & Mindful Notes (Matching Report)
   getNotes() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.NOTES);
@@ -245,10 +290,27 @@ const HavenStorage = {
       return [
         {
           id: 'n-1',
-          text: 'ideas & random\nthoughts',
+          title: '✨ Sanctuary Vision',
+          text: 'Slow mornings, warm cups of roasted hojicha tea, and soft sunlight drifting through sheer linen curtains.',
           noteDate: getRelativeDateString(0),
-          color: 'buttercup',
-          date: 'Today'
+          color: 'amber',
+          date: 'Saved Today'
+        },
+        {
+          id: 'n-2',
+          title: '🌿 Color Harmonies',
+          text: '• Forest Matcha: #475E3E\n• Wild Honey: #D49A58\n• Morning Mist: #DCE3C8\n• Sakura Cloud: #F7D4DA',
+          noteDate: getRelativeDateString(-1),
+          color: 'matcha',
+          date: 'Yesterday'
+        },
+        {
+          id: 'n-3',
+          title: '🌸 Gentle Reminder',
+          text: 'You don\'t have to carry everything at once. Put down heavy thoughts and take this minute for yourself.',
+          noteDate: getRelativeDateString(-7),
+          color: 'rose',
+          date: 'Oct 14'
         }
       ];
     } catch (e) {
@@ -259,15 +321,47 @@ const HavenStorage = {
     localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(notes));
   },
 
-  // Goals & Habits
+  // Habit Garden & Mindful Rituals (Matching Report)
   getHabits() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.HABITS);
       if (data) return JSON.parse(data);
       return [
-        { id: 'h-1', title: 'Read a little', level: 4, nurtured: true },
-        { id: 'h-2', title: 'Study focus', level: 5, nurtured: true },
-        { id: 'h-3', title: 'Take a break', level: 3, nurtured: false }
+        {
+          id: 'h-1',
+          title: '💧 Morning lemon water & hydration',
+          streak: 'Daily wellness · 5-day active streak',
+          level: 5,
+          nurtured: true
+        },
+        {
+          id: 'h-2',
+          title: '📖 15 minutes mindful reading',
+          streak: 'Study & calm · 4-day streak',
+          level: 4,
+          nurtured: true
+        },
+        {
+          id: 'h-3',
+          title: '🎯 Deep focus flow session',
+          streak: 'Pomodoro craft · 5-day streak',
+          level: 5,
+          nurtured: true
+        },
+        {
+          id: 'h-4',
+          title: '🍃 Gentle walk in afternoon sunlight',
+          streak: 'Movement & fresh air · 3-day streak',
+          level: 3,
+          nurtured: false
+        },
+        {
+          id: 'h-5',
+          title: '🍵 Evening chamomile wind-down',
+          streak: 'Restorative sleep ritual · 4-day streak',
+          level: 4,
+          nurtured: false
+        }
       ];
     } catch (e) {
       return [];
@@ -278,7 +372,7 @@ const HavenStorage = {
   },
 
   getMood() {
-    return localStorage.getItem(STORAGE_KEYS.MOOD) || 'peaceful';
+    return localStorage.getItem(STORAGE_KEYS.MOOD) || 'Peaceful & Calm';
   },
 
   setMood(mood) {

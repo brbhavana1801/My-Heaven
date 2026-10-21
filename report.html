@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>little haven ♡ · Executive Productivity & Life Report</title>
+  <meta name="description" content="Studio Ghibli Forest Sanctuary Executive Productivity & Life Report. An organized snapshot of sanctuary tasks, habits, milestones, reflections, and memories.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23475E3E'/><path d='M16 6 C10 12 10 20 16 26 C22 20 22 12 16 6 Z' fill='%23DCE3C8'/></svg>">
+  <link rel="stylesheet" href="css/report.css">
+</head>
+<body class="report-body">
+
+  <!-- Floating Screen Toolbar (Hidden in Print) -->
+  <aside class="report-screen-toolbar" aria-label="Report Action Toolbar">
+    <div class="report-toolbar-brand">
+      <span style="font-size:1.25rem;">🌿</span>
+      <span>little haven ♡ Executive Report</span>
+    </div>
+    <div class="report-toolbar-actions">
+      <a href="index.html" class="rep-btn rep-btn-outline" title="Return to Sanctuary Dashboard">
+        ← Return to Dashboard
+      </a>
+      <button type="button" class="rep-btn rep-btn-outline" onclick="ReportApp.toggleLiveSync(this)" id="liveSyncToggleBtn" title="Sync with your real-time dashboard data">
+        🔄 Real-Time Data Sync: <span id="syncStatus">Off (Sample PDF)</span>
+      </button>
+      <button type="button" class="rep-btn rep-btn-primary" onclick="window.print()" title="Print or Save PDF (A4 Layout)">
+        🖨️ Print / Save as PDF
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       PAGE 1 OF 2 — SANCTUARY OVERVIEW & ACTIVE TASKS
+       ======================================================================== -->
+  <article class="report-sheet" id="reportPage1">
+    <div>
+      <!-- Top Banner Header -->
+      <header class="rep-header-banner">
+        <div class="rep-header-left">
+          <div class="rep-totoro-badge" title="Totoro Forest Spirit">
+            <svg viewBox="0 0 80 84" width="36" height="38">
+              <ellipse cx="28" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(-10 28 18)" />
+              <ellipse cx="52" cy="18" rx="6" ry="16" fill="#75876E" transform="rotate(10 52 18)" />
+              <ellipse cx="40" cy="52" rx="30" ry="28" fill="#75876E" />
+              <ellipse cx="40" cy="57" rx="22" ry="20" fill="#F4EFE2" />
+              <path d="M34 46 L37 43 L40 46 M46 46 L49 43 L52 46 M40 54 L43 51 L46 54" stroke="#75876E" stroke-width="2" stroke-linecap="round" fill="none" />
+              <circle cx="30" cy="38" r="5" fill="#FFFFFF" />
+              <circle cx="50" cy="38" r="5" fill="#FFFFFF" />
+              <circle cx="31" cy="38" r="2.2" fill="#1C1F1A" />
+              <circle cx="49" cy="38" r="2.2" fill="#1C1F1A" />
+              <ellipse cx="40" cy="40" rx="2" ry="1" fill="#1C1F1A" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="rep-header-title">little haven ♡</h1>
+            <div class="rep-header-sub">Studio Ghibli Forest Sanctuary · Executive Productivity &amp; Life Report</div>
+          </div>
+        </div>
+
+        <div class="rep-header-right">
+          <div class="rep-active-pill">
+            <span>🌿</span> Sanctuary Active
+          </div>
+          <div class="rep-header-meta">
+            <div>Sanctuary Keeper: <strong id="repKeeperName">Wanderer</strong></div>
+            <div>Report Generated: <span id="repGeneratedDate">October 21, 2026 • 09:59 AM</span></div>
+            <div>Atmosphere: <strong>Evergreen Forest Theme</strong></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Forest Whisper Quote & Heart's Reflection -->
+      <section class="rep-whisper-row">
+        <div class="rep-quote-card">
+          <div class="rep-quote-text" id="repQuoteText">"Take today one gentle thing at a time ✨"</div>
+          <div class="rep-quote-attr">— Daily Forest Whisper · Little Haven Sanctuary</div>
+        </div>
+        <div class="rep-reflection-card">
+          <div class="rep-reflection-label">🍵 HEART'S REFLECTION</div>
+          <div class="rep-reflection-val" id="repHeartReflection">Peaceful &amp; Calm</div>
+        </div>
+      </section>
+
+      <!-- 4 KPI Metrics Summary Strip -->
+      <section class="rep-kpi-grid">
+        <div class="rep-kpi-card rep-kpi-card-1">
+          <div class="rep-kpi-label">📋 TODAY'S TASKS</div>
+          <div class="rep-kpi-val" id="repKpiTasks">1 / 7 done (14%)</div>
+        </div>
+        <div class="rep-kpi-card rep-kpi-card-2">
+          <div class="rep-kpi-label">🌱 HABIT GARDEN</div>
+          <div class="rep-kpi-val" id="repKpiHabits">3 / 5 nurtured (60%)</div>
+        </div>
+        <div class="rep-kpi-card rep-kpi-card-3">
+          <div class="rep-kpi-label">📅 NEXT MILESTONE</div>
+          <div class="rep-kpi-val" id="repKpiMilestone">Blossom Walk 🌸</div>
+        </div>
+        <div class="rep-kpi-card rep-kpi-card-4">
+          <div class="rep-kpi-label">⏱️ FOCUS SANCTUARY</div>
+          <div class="rep-kpi-val" id="repKpiFocus">25:00 min flow ready</div>
+        </div>
+      </section>
+
+      <!-- Sanctuary Tasks & Projects Overview Section -->
+      <section class="rep-section-box">
+        <div class="rep-section-header">
+          <h2 class="rep-section-title">
+            <span>📋</span> Sanctuary Tasks &amp; Projects Overview
+          </h2>
+          <span class="rep-badge-pill" id="repActiveTasksBadge">7 Active Tasks</span>
+        </div>
+
+        <table class="rep-tasks-table" aria-label="Sanctuary Tasks Overview">
+          <thead>
+            <tr>
+              <th style="width: 12%;">STATUS</th>
+              <th style="width: 44%;">TASK DETAILS &amp; SUBTASKS</th>
+              <th style="width: 18%;">CATEGORY</th>
+              <th style="width: 14%;">PRIORITY</th>
+              <th style="width: 12%;">DUE DATE</th>
+            </tr>
+          </thead>
+          <tbody id="repTasksTableBody">
+            <!-- Row 1 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill done">✓ Done</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Morning matcha ritual &amp; silent meditation</div>
+                <div class="rep-task-desc">Breathe in ceremonial green tea aroma. 10 minutes stillness by window.</div>
+                <ul class="rep-subtasks-list">
+                  <li class="rep-subtask-item checked">
+                    <span class="rep-subtask-check">✓</span>
+                    <span>Whisk warm ceremonial grade green tea</span>
+                  </li>
+                  <li class="rep-subtask-item checked">
+                    <span class="rep-subtask-check">✓</span>
+                    <span>Sit quietly beside sunlight and breathe</span>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span class="rep-category-text">Wellness &amp; Tea</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill gentle">GENTLE</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">Today</span>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill in-prog">⏳ In Prog</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Design watercolor moodboard for sanctuary desk</div>
+                <div class="rep-task-desc">Blend olive green, cherry blossom pink, honeycomb yellow on cold-press paper.</div>
+                <ul class="rep-subtasks-list">
+                  <li class="rep-subtask-item checked">
+                    <span class="rep-subtask-check">✓</span>
+                    <span>Select earth pigment swatches</span>
+                  </li>
+                  <li class="rep-subtask-item">
+                    <span class="rep-subtask-square">▫</span>
+                    <span>Sketch vine borders &amp; soot sprites</span>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span class="rep-category-text">Creative</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill deep-focus">DEEP FOCUS</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">Today</span>
+              </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill in-prog">⏳ In Prog</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Water terrarium moss &amp; mist balcony ferns</div>
+                <div class="rep-task-desc">Check moisture balance. Mist delicate maidenhair ferns with fresh rainwater.</div>
+              </td>
+              <td>
+                <span class="rep-category-text">Garden &amp; Nature</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill quick-win">QUICK WIN</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">Today</span>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill upcoming">⏳ Upcoming</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Polish sanctuary web layout &amp; theme variables</div>
+                <div class="rep-task-desc">Ensure silky smooth micro-animations, glassmorphism borders, tactile responsiveness.</div>
+                <ul class="rep-subtasks-list">
+                  <li class="rep-subtask-item checked">
+                    <span class="rep-subtask-check">✓</span>
+                    <span>Test dark midnight theme palettes</span>
+                  </li>
+                  <li class="rep-subtask-item">
+                    <span class="rep-subtask-square">▫</span>
+                    <span>Verify mobile touch responsiveness</span>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span class="rep-category-text">Work &amp; Code</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill deep-focus">DEEP FOCUS</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">Tomorrow</span>
+              </td>
+            </tr>
+
+            <!-- Row 5 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill upcoming">⏳ Upcoming</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Read chapter 4 of The Wind Rises by the hearth</div>
+                <div class="rep-task-desc">Take quiet notes on pastoral scenery reflections and architectural sketches.</div>
+              </td>
+              <td>
+                <span class="rep-category-text">Study &amp; Reading</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill gentle">GENTLE</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">Tomorrow</span>
+              </td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill upcoming">⏳ Upcoming</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Visit weekend organic herbalists market</div>
+                <div class="rep-task-desc">Pick up dried chamomile flowers, lavender sprigs, and wildflower clover honey.</div>
+              </td>
+              <td>
+                <span class="rep-category-text">Daily Life</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill gentle">GENTLE</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">In 2 days</span>
+              </td>
+            </tr>
+
+            <!-- Row 7 -->
+            <tr>
+              <td>
+                <span class="rep-status-pill upcoming">⏳ Upcoming</span>
+              </td>
+              <td>
+                <div class="rep-task-title">Organize digital notes into curated knowledge garden</div>
+                <div class="rep-task-desc">Archive stale bookmarks and categorize peaceful project inspirations.</div>
+              </td>
+              <td>
+                <span class="rep-category-text">Work &amp; Code</span>
+              </td>
+              <td>
+                <span class="rep-priority-pill quick-win">QUICK WIN</span>
+              </td>
+              <td>
+                <span class="rep-duedate-text">In 3 days</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- Page 1 Footer -->
+    <footer class="rep-sheet-footer">
+      <div>● little haven ♡ · Page 1 of 2 · Studio Ghibli Forest Sanctuary</div>
+      <div>Report generated on Wednesday, October 21, 2026</div>
+    </footer>
+  </article>
+
+  <!-- ========================================================================
+       PAGE 2 OF 2 — HABIT GARDEN, MILESTONES, REFLECTIONS & MEMORIES
+       ======================================================================== -->
+  <article class="report-sheet" id="reportPage2">
+    <div>
+      <!-- Section 1: Habit Garden & Mindful Rituals -->
+      <section class="rep-section-box">
+        <div class="rep-section-header">
+          <h2 class="rep-section-title">
+            <span>🌱</span> Habit Garden &amp; Mindful Rituals
+          </h2>
+          <span class="rep-badge-pill" id="repHabitsBadge">3 of 5 Nurtured Today</span>
+        </div>
+
+        <div class="rep-habits-grid" id="repHabitsContainer">
+          <!-- Habit 1 -->
+          <div class="rep-habit-item">
+            <div>
+              <div class="rep-habit-title">💧 Morning lemon water &amp; hydration</div>
+              <div class="rep-habit-streak">Daily wellness · 5-day active streak</div>
+            </div>
+            <span class="rep-habit-badge nurtured">🌳 Level 5 · Nurtured ✓</span>
+          </div>
+
+          <!-- Habit 2 -->
+          <div class="rep-habit-item">
+            <div>
+              <div class="rep-habit-title">📖 15 minutes mindful reading</div>
+              <div class="rep-habit-streak">Study &amp; calm · 4-day streak</div>
+            </div>
+            <span class="rep-habit-badge nurtured">🌿 Level 4 · Nurtured ✓</span>
+          </div>
+
+          <!-- Habit 3 -->
+          <div class="rep-habit-item">
+            <div>
+              <div class="rep-habit-title">🎯 Deep focus flow session</div>
+              <div class="rep-habit-streak">Pomodoro craft · 5-day streak</div>
+            </div>
+            <span class="rep-habit-badge nurtured">🌳 Level 5 · Nurtured ✓</span>
+          </div>
+
+          <!-- Habit 4 -->
+          <div class="rep-habit-item">
+            <div>
+              <div class="rep-habit-title">🍃 Gentle walk in afternoon sunlight</div>
+              <div class="rep-habit-streak">Movement &amp; fresh air · 3-day streak</div>
+            </div>
+            <span class="rep-habit-badge pending">🌱 Level 3 · Pending</span>
+          </div>
+
+          <!-- Habit 5 -->
+          <div class="rep-habit-item">
+            <div>
+              <div class="rep-habit-title">🍵 Evening chamomile wind-down</div>
+              <div class="rep-habit-streak">Restorative sleep ritual · 4-day streak</div>
+            </div>
+            <span class="rep-habit-badge pending">🌿 Level 4 · Pending</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Upcoming Milestones & Agenda Schedule -->
+      <section class="rep-section-box">
+        <div class="rep-section-header">
+          <h2 class="rep-section-title">
+            <span>📅</span> Upcoming Milestones &amp; Agenda Schedule
+          </h2>
+          <span class="rep-badge-pill">Next 14 Days</span>
+        </div>
+
+        <div class="rep-milestones-grid" id="repMilestonesContainer">
+          <!-- Milestone 1 -->
+          <div class="rep-milestone-card">
+            <div class="rep-days-block d2">
+              +2
+              <span>DAYS</span>
+            </div>
+            <div>
+              <div class="rep-milestone-title">Spring Blossom Walk &amp; Sketching 🌸</div>
+              <div class="rep-milestone-desc">Golden hour stroll with sketchbook &amp; charcoal pigments</div>
+            </div>
+          </div>
+
+          <!-- Milestone 2 -->
+          <div class="rep-milestone-card">
+            <div class="rep-days-block d4">
+              +4
+              <span>DAYS</span>
+            </div>
+            <div>
+              <div class="rep-milestone-title">Studio Web Architecture Showcase 🚀</div>
+              <div class="rep-milestone-desc">Present new interactive dashboard experience</div>
+            </div>
+          </div>
+
+          <!-- Milestone 3 -->
+          <div class="rep-milestone-card">
+            <div class="rep-days-block d7">
+              +7
+              <span>DAYS</span>
+            </div>
+            <div>
+              <div class="rep-milestone-title">Botanical Herbarium Workshop 🌿</div>
+              <div class="rep-milestone-desc">Pressing wild mountain ferns &amp; clover blossoms</div>
+            </div>
+          </div>
+
+          <!-- Milestone 4 -->
+          <div class="rep-milestone-card">
+            <div class="rep-days-block d11">
+              +11
+              <span>DAYS</span>
+            </div>
+            <div>
+              <div class="rep-milestone-title">Sanctuary Birthday Gathering 🎂</div>
+              <div class="rep-milestone-desc">Fresh strawberry shortcake &amp; herbal brews with loved ones</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Sanctuary Reflections & Mindful Notes -->
+      <section class="rep-section-box">
+        <div class="rep-section-header">
+          <h2 class="rep-section-title">
+            <span>📝</span> Sanctuary Reflections &amp; Mindful Notes
+          </h2>
+          <span class="rep-badge-pill">3 Entries</span>
+        </div>
+
+        <div class="rep-notes-grid" id="repNotesContainer">
+          <!-- Note 1 -->
+          <div class="rep-note-card amber">
+            <div>
+              <div class="rep-note-title">✨ Sanctuary Vision</div>
+              <div class="rep-note-body">Slow mornings, warm cups of roasted hojicha tea, and soft sunlight drifting through sheer linen curtains.</div>
+            </div>
+            <div class="rep-note-footer">Saved Today</div>
+          </div>
+
+          <!-- Note 2 -->
+          <div class="rep-note-card matcha">
+            <div>
+              <div class="rep-note-title">🌿 Color Harmonies</div>
+              <div class="rep-note-body">• Forest Matcha: #475E3E
+• Wild Honey: #D49A58
+• Morning Mist: #DCE3C8
+• Sakura Cloud: #F7D4DA</div>
+            </div>
+            <div class="rep-note-footer">Yesterday</div>
+          </div>
+
+          <!-- Note 3 -->
+          <div class="rep-note-card rose">
+            <div>
+              <div class="rep-note-title">🌸 Gentle Reminder</div>
+              <div class="rep-note-body">You don't have to carry everything at once. Put down heavy thoughts and take this minute for yourself.</div>
+            </div>
+            <div class="rep-note-footer">Oct 14</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Memories Scrapbook Highlights -->
+      <section class="rep-section-box">
+        <div class="rep-section-header">
+          <h2 class="rep-section-title">
+            <span>📷</span> Memories Scrapbook Highlights
+          </h2>
+          <span class="rep-badge-pill">Sanctuary Gallery</span>
+        </div>
+
+        <div class="rep-memories-grid" id="repMemoriesContainer">
+          <!-- Memory 1 -->
+          <div class="rep-memory-card">
+            <div class="rep-memory-header">
+              <div class="rep-memory-title">Golden Sunset Hills ✨</div>
+              <span class="rep-memory-date">Today</span>
+            </div>
+            <div class="rep-memory-quote">
+              "Walking through sunlit hills at golden sunset. The wind was carrying the sweet scent of wild mountain flowers."
+            </div>
+          </div>
+
+          <!-- Memory 2 -->
+          <div class="rep-memory-card">
+            <div class="rep-memory-header">
+              <div class="rep-memory-title">Cottage Sanctuary 🏡🍃</div>
+              <span class="rep-memory-date">2 days ago</span>
+            </div>
+            <div class="rep-memory-quote">
+              "A quiet afternoon in moss woods. Brewed chamomile tea and listened to raindrops tapping on wooden roof."
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 2 Footer -->
+    <footer class="rep-sheet-footer">
+      <div>● little haven ♡ · Page 2 of 2 · Crafted with care &amp; peaceful intention</div>
+      <div>May your footsteps be light and your heart peaceful 🌿</div>
+    </footer>
+  </article>
+
+  <!-- Script for Dynamic Sync with Dashboard LocalStorage -->
+  <script src="js/data.js"></script>
+  <script>
+    const ReportApp = {
+      isSyncing: false,
+
+      init() {
+        // Automatically check if user is logged in to personalize keeper name
+        try {
+          const authUser = HavenStorage.getAuthUser();
+          if (authUser && authUser.name) {
+            document.getElementById('repKeeperName').textContent = authUser.name;
+          }
+        } catch (e) {}
+      },
+
+      toggleLiveSync(btn) {
+        this.isSyncing = !this.isSyncing;
+        const statusEl = document.getElementById('syncStatus');
+        if (this.isSyncing) {
+          statusEl.textContent = 'Active (Live Dashboard)';
+          statusEl.style.color = '#386B2E';
+          statusEl.style.fontWeight = '800';
+          this.applyLiveDashboardData();
+        } else {
+          statusEl.textContent = 'Off (Sample PDF)';
+          statusEl.style.color = 'inherit';
+          statusEl.style.fontWeight = 'normal';
+          window.location.reload();
+        }
+      },
+
+      applyLiveDashboardData() {
+        try {
+          const tasks = HavenStorage.getTasks();
+          const habits = HavenStorage.getHabits();
+          const milestones = HavenStorage.getMilestones();
+          const notes = HavenStorage.getNotes();
+          const memories = HavenStorage.getMemories();
+          const mood = HavenStorage.getMood();
+          const authUser = HavenStorage.getAuthUser();
+
+          if (authUser && authUser.name) {
+            document.getElementById('repKeeperName').textContent = authUser.name;
+          }
+
+          if (mood) {
+            document.getElementById('repHeartReflection').textContent = mood.charAt(0).toUpperCase() + mood.slice(1);
+          }
+
+          // KPI Updates
+          const totalTasks = tasks.length;
+          const doneTasks = tasks.filter(t => t.completed).length;
+          const taskPct = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+          document.getElementById('repKpiTasks').textContent = `${doneTasks} / ${totalTasks} done (${taskPct}%)`;
+
+          const totalHabits = habits.length;
+          const nurturedHabits = habits.filter(h => h.nurtured).length;
+          const habitPct = totalHabits > 0 ? Math.round((nurturedHabits / totalHabits) * 100) : 0;
+          document.getElementById('repKpiHabits').textContent = `${nurturedHabits} / ${totalHabits} nurtured (${habitPct}%)`;
+          document.getElementById('repHabitsBadge').textContent = `${nurturedHabits} of ${totalHabits} Nurtured Today`;
+
+          if (milestones.length > 0) {
+            document.getElementById('repKpiMilestone').textContent = milestones[0].title;
+          }
+
+          document.getElementById('repActiveTasksBadge').textContent = `${totalTasks} Active Tasks`;
+
+        } catch (err) {
+          console.error('Failed to sync live data:', err);
+        }
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      ReportApp.init();
+    });
+  </script>
+</body>
+</html>

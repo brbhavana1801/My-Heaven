@@ -271,6 +271,10 @@ const App = {
     if (viewName === 'habits') this.renderDedicatedHabits();
     if (viewName === 'notes') this.renderDedicatedNotes();
     if (viewName === 'memories') this.renderDedicatedMemories();
+    if (viewName === 'report') {
+      const iframe = document.getElementById('reportIframe');
+      if (iframe) iframe.src = 'report.html';
+    }
   },
 
   // Legacy nav dock compatibility
