@@ -72,7 +72,7 @@ const App = {
       const timeEl = document.getElementById('liveClockTime');
       const dateEl = document.getElementById('liveClockDate');
       if (timeEl) {
-        timeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+        timeEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
       }
       if (dateEl) {
         dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
@@ -103,9 +103,18 @@ const App = {
   },
 
   updateUserBadge() {
+    const user = this.currentUser || { name: 'Forest Wanderer', email: 'wanderer@forest.me' };
     const nameEl = document.getElementById('topBarUserName');
     if (nameEl) {
-      nameEl.textContent = (this.currentUser && this.currentUser.name) ? this.currentUser.name.split(' ')[0] : 'Wanderer';
+      nameEl.textContent = user.name ? user.name.split(' ')[0] : 'Wanderer';
+    }
+    const ddName = document.getElementById('accDropdownName');
+    if (ddName) {
+      ddName.textContent = user.name || 'Forest Wanderer';
+    }
+    const ddEmail = document.getElementById('accDropdownEmail');
+    if (ddEmail) {
+      ddEmail.textContent = user.email || 'wanderer@forest.me';
     }
   },
 
@@ -1498,6 +1507,31 @@ const App = {
   },
 
   // --------------------------------------------------------------------------
+  // Header Account Dropdown
+  // --------------------------------------------------------------------------
+  toggleAccountDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('headerAccountDropdown');
+    const btn = document.getElementById('headerAccountBtn');
+    if (!dd) return;
+    const isOpen = dd.classList.contains('open');
+    if (isOpen) {
+      this.closeAccountDropdown();
+    } else {
+      dd.classList.add('open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+      HavenSoundSystem.playPopSound();
+    }
+  },
+
+  closeAccountDropdown() {
+    const dd = document.getElementById('headerAccountDropdown');
+    const btn = document.getElementById('headerAccountBtn');
+    if (dd) dd.classList.remove('open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  },
+
+  // --------------------------------------------------------------------------
   // Easter Eggs: Totoro & Soot Sprites
   // --------------------------------------------------------------------------
   initSootSpritesAndTotoro() {
@@ -1615,14 +1649,19 @@ const App = {
         this.closeDayInspector();
         this.closeAccountModal();
         this.closeQuickAddMenu();
+        this.closeAccountDropdown();
       }
     });
 
-    // Close popover if clicking outside
+    // Close dropdowns if clicking outside
     document.addEventListener('click', (e) => {
       const container = document.querySelector('.quick-add-dropdown-container');
       if (container && !container.contains(e.target)) {
         this.closeQuickAddMenu();
+      }
+      const accountWrap = document.getElementById('headerAccountWrap');
+      if (accountWrap && !accountWrap.contains(e.target)) {
+        this.closeAccountDropdown();
       }
     });
   },
